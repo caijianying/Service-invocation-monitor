@@ -1,0 +1,21 @@
+<idea-plugin>
+    <id>com.caijy.plugin</id>
+    <vendor url="http://www.jetbrains.com" email="support@jetbrains.com"/>
+    <name>Service Invocation Monitor</name>
+    <description>一款链路监控插件，可以监控Junit、Springboot的调用链，统计接口方法耗时等。支持Idea本地导入使用。</description>
+    <vendor>小白菜</vendor>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <java.programPatcher implementation="com.caijy.plugin.patcher.AgentPatcher"/>
+    </extensions>
+
+    <actions>
+
+    </actions>
+</idea-plugin>
