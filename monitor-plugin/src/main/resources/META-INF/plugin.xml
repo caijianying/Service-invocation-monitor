@@ -3,7 +3,7 @@
     <vendor url="http://www.jetbrains.com" email="support@jetbrains.com"/>
     <name>Service Invocation Monitor</name>
     <description><![CDATA[
-      A link monitoring plug-in, you can monitor Junit, Springboot call chain, statistics interface method time.
+      A link monitoring plug-in, you can monitor Junit, SpringBoot Invocation chain, statistics interface method time.
       <br/>github：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
     ]]></description>
     <vendor>小白菜</vendor>
