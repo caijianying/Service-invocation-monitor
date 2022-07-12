@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.caijy.plugin</id>
-    <vendor url="http://www.jetbrains.com" email="support@jetbrains.com"/>
+    <vendor url="https://blog.caijy.top/" email="XiaoBaiCai5811@163.com"/>
     <name>Service Invocation Monitor</name>
     <description><![CDATA[
       A link monitoring plug-in, you can monitor Junit, SpringBoot Invocation chain, statistics interface method time.
