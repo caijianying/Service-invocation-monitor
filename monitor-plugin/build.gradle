@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.1'
+version '1.0.0'
 apply plugin: 'java'
 sourceCompatibility = 1.8
 jar.enabled = true
@@ -30,9 +30,6 @@ patchPluginXml {
     patchPluginXml {
         sinceBuild.set("193")
         untilBuild.set("222.*")
-        changeNotes = "服务调用监控插件\n" +
-                "1. 支持监控junit用例\n" +
-                "2. 支持SpringBoot内置tomcat启动方式的监控\n" +
-                "3. 监控指标：trace链路的耗时"
     }
 }
+

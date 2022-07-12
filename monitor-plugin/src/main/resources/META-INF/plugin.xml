@@ -2,8 +2,22 @@
     <id>com.caijy.plugin</id>
     <vendor url="http://www.jetbrains.com" email="support@jetbrains.com"/>
     <name>Service Invocation Monitor</name>
-    <description>一款链路监控插件，可以监控Junit、Springboot的调用链，统计接口方法耗时等。支持Idea本地导入使用。</description>
+    <description><![CDATA[
+      A link monitoring plug-in, you can monitor Junit, Springboot call chain, statistics interface method time.
+      <br/>github：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
+    ]]></description>
     <vendor>小白菜</vendor>
+
+    <change-notes><![CDATA[
+    <h3>V1.0.0</h3>
+    <ul>
+      <li>Support monitoring junit use cases</li>
+      <li>Support SpringBoot application monitoring</li>
+      <li>Monitoring indicator: The time of the trace link</li>
+    </ul>
+
+    ]]>
+    </change-notes>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
