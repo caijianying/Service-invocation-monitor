@@ -6,5 +6,5 @@
 使用方式很简单，只需要添加一行VMoption即可，`-Dmonitor.package=你需要监控的包名`，若不设置，也不影响程序的正常运行。
 
 ### 小Tips
-若觉得有方便到您，欢迎Star.若有建议，请提Issue.有问题也可以发邮件到XiaoBaiCai5811@163.com.
+若觉得有方便到您，欢迎Star哦.若有建议，请提Issue.有问题也可以发邮件到XiaoBaiCai5811@163.com.
 大家共同进步。
