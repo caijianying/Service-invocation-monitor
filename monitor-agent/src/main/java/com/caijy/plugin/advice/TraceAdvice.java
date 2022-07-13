@@ -33,7 +33,7 @@ public class TraceAdvice {
         }
         String entrySpan = TrackManager.createEntrySpan();
         TimeCostManager.start(className + "." + methodName);
-        System.out.println("链路追踪：" + entrySpan + " " + className + "." + methodName);
+        //System.out.println("链路追踪：" + entrySpan + " " + className + "." + methodName);
 
     }
 
@@ -49,7 +49,7 @@ public class TraceAdvice {
         }
         TimeCostManager.stop(className + "." + methodName);
         String exitSpan = TrackManager.getExitSpan();
-        System.out.println("链路追踪：" + exitSpan + " " + className + "." + methodName + " ==> exit.");
+        //System.out.println("链路追踪：" + exitSpan + " " + className + "." + methodName + " ==> exit.");
     }
 
 }

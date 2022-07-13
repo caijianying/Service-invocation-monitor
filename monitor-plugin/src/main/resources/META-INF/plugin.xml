@@ -3,7 +3,7 @@
     <vendor url="https://blog.caijy.top/" email="XiaoBaiCai5811@163.com"/>
     <name>Service Invocation Monitor</name>
     <description><![CDATA[
-      A link monitoring plug-in, you can monitor Junit, SpringBoot Invocation chain, statistics interface method time.
+      This is a lightweight zero-intrusion link monitoring Idea plug-in, which can monitor the call chain of Junit and SpringBoot applications and count the time of interface methods. It can help developers to see the time of call chain more intuitively when debugging code.
       <br/>github：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
     ]]></description>
     <vendor>小白菜</vendor>

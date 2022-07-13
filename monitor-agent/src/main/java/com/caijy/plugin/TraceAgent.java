@@ -18,8 +18,9 @@ public class TraceAgent {
 
     //JVM 首先尝试在代理类上调用以下方法
     public static void premain(String agentArgs, Instrumentation inst) {
-        System.out.println("基于javaagent链路追踪 => premain");
-        System.out.println("基于javaagent链路追踪,参数：" + agentArgs);
+        //System.out.println("基于javaagent链路追踪 => premain");
+        //System.out.println("基于javaagent链路追踪,参数：" + agentArgs);
+        System.out.println("receive the package ：" + agentArgs);
         AgentBuilder agentBuilder = new AgentBuilder.Default();
         String packageName = agentArgs;
 

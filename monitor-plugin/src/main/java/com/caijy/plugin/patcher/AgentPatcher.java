@@ -24,7 +24,7 @@ public class AgentPatcher extends JavaProgramPatcher {
         String packageParam = vmParametersList.getParameters().stream().filter(
             t -> t.indexOf("-Dmonitor.package=") != -1).findFirst().orElse(null);
         if (null == packageParam) {
-            MessageUtil.error("vm options is missing, please add -Dmonitor.package ! ");
+            MessageUtil.warn("vm options is missing, you can add -Dmonitor.package to enable Link Monitoring! ");
             return;
         }
         String packageName = packageParam.substring(packageParam.indexOf("=") + 1);
