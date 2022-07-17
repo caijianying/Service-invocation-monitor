@@ -3,9 +3,14 @@
     <vendor url="https://blog.caijy.top/" email="XiaoBaiCai5811@163.com"/>
     <name>Service Invocation Monitor</name>
     <description><![CDATA[
-      This is a lightweight zero-intrusion link monitoring Idea plug-in, which can monitor the call chain of Junit and SpringBoot applications and count the time of interface methods. It can help developers to see the time of call chain more intuitively when debugging code.
-      <br/>github：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
-    ]]></description>
+        This is a lightweight Idea plug-in that monitors the link calls of Junit and SpringBoot applications and counts the time spent on interface methods with zero intrusion. It helps developers see the timing of the call chain more visually when debugging code, and optimizes performance ahead of time.
+        <br/>
+        <br/> 这是一款轻量级的Idea插件，可以零侵入地做到对Junit和SpringBoot应用程序调用链路的监控，统计接口方法的耗时。它可以帮助开发人员在调试代码时更直观地看到调用链的时间，提前对性能做一些优化处理。
+        <br/>
+        <br/>插件地址：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
+        <br/>演示项目地址：<a href="https://github.com/caijianying/Service-invocation-monitor-demo">https://github.com/caijianying/Service-invocation-monitor-demo</a>
+        <br/>问题搜集邮箱：XiaoBaiCai5811@163.com
+        ]]></description>
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
@@ -15,6 +20,14 @@
       <li>Support SpringBoot application monitoring</li>
       <li>Monitoring indicator: The time of the trace link</li>
     </ul>
+
+    <h3>V1.0.0</h3>
+    <ul>
+        <li>支持Junit测试用例的监控</li>
+        <li>支持SpringBoot应用的监控</li>
+        <li>监控指标：trace链路的耗时</li>
+    </ul>
+
 
     ]]>
     </change-notes>
