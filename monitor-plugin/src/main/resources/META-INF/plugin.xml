@@ -14,6 +14,21 @@
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
+    <h3>V1.0.1</h3>
+    <ul>
+        <li>fix. The bug that the plugin reports a wide range of errors in a multi-threaded environment</li>
+        <li>Method name interception processing</li>
+        <li>Filter useless method calls inside the Spring Framework</li>
+    </ul>
+
+    <h3>V1.0.1</h3>
+    <ul>
+        <li>fix.多线程环境下插件大范围报错的bug</li>
+        <li>方法名称拦截处理</li>
+        <li>过滤Spring框架内部无用的方法调用</li>
+    </ul>
+
+
     <h3>V1.0.0</h3>
     <ul>
       <li>Support monitoring junit use cases</li>

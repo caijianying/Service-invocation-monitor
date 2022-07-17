@@ -1,5 +1,7 @@
 package com.caijy.plugin.context;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,14 +35,15 @@ public class TimeCostManager {
     public static void summary() {
         StringBuilder builder = new StringBuilder();
         builder.append(
-            "serialNumber |  --------------------------Service-----------------------   |  --timeCost-- |\n");
+                "serialNumber |  --------------------------Service-----------------------   |  --timeCost-- |\n");
         builder.append(
-            "------------ |  --------------------------------------------------------   |  ------------ |\n");
+                "------------ |  --------------------------------------------------------   |  ------------ |\n");
         for (int i = 0, size = sortedService.size(); i < size; i++) {
             String serviceName = sortedService.get(i);
             long serviceTimeCost = serviceTimeCostMap.get(serviceName);
+            String realServiceName = serviceName.substring(0, serviceName.indexOf("$$EnhancerBySpringCGLIB")) + serviceName.substring(serviceName.lastIndexOf("."));
             builder.append(
-                String.format("     NO.%s    |  【%s】   | 【%s】ms     |\n", i+1, serviceName, serviceTimeCost));
+                    String.format("     NO.%s    |  【%s】   | 【%s】ms     |\n", i + 1, realServiceName, serviceTimeCost));
         }
         serviceTimeCostMap.clear();
         sortedService.clear();
