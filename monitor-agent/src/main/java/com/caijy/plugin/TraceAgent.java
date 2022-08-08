@@ -1,14 +1,36 @@
 package com.caijy.plugin;
 
 import java.lang.instrument.Instrumentation;
+import java.util.HashMap;
+import java.util.Objects;
 
 import com.caijy.plugin.advice.TraceAdvice;
+import com.caijy.plugin.agent.core.bootstrap.BootstrapinstrumentBoost;
+import com.caijy.plugin.inteceptor.DispatcherInteceptor;
+import com.caijy.plugin.inteceptor.SpringAnnotationInteceptor;
+import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.agent.builder.AgentBuilder.Listener;
+import net.bytebuddy.agent.builder.AgentBuilder.RawMatcher;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.scaffold.TypeValidation;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.matcher.AnnotationTypeMatcher;
 import net.bytebuddy.matcher.ElementMatchers;
+import net.bytebuddy.matcher.NameMatcher;
+import net.bytebuddy.pool.TypePool;
 import net.bytebuddy.utility.JavaModule;
+
+import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
+import static net.bytebuddy.matcher.ElementMatchers.isInterface;
+import static net.bytebuddy.matcher.ElementMatchers.isPublic;
+import static net.bytebuddy.matcher.ElementMatchers.isStatic;
+import static net.bytebuddy.matcher.ElementMatchers.nameContains;
+import static net.bytebuddy.matcher.ElementMatchers.nameStartsWith;
+import static net.bytebuddy.matcher.ElementMatchers.named;
+import static net.bytebuddy.matcher.ElementMatchers.not;
 
 /**
  * @author liguang
@@ -21,54 +43,22 @@ public class TraceAgent {
         //System.out.println("基于javaagent链路追踪 => premain");
         //System.out.println("基于javaagent链路追踪,参数：" + agentArgs);
         System.out.println("receive the package ：" + agentArgs);
-        AgentBuilder agentBuilder = new AgentBuilder.Default();
         String packageName = agentArgs;
 
-        AgentBuilder.Transformer transformer = (builder, typeDescription, classLoader, javaModule) -> {
-            builder = builder.visit(
-                Advice.to(TraceAdvice.class)
-                    .on(ElementMatchers.isMethod()
-                        .and(ElementMatchers.any()).and(ElementMatchers.not(ElementMatchers.nameStartsWith("main"))
-                        )));
-            return builder;
-        };
+        new AgentBuilder.Default()
+            .type(ElementMatchers.named("org.springframework.web.servlet.DispatcherServlet"))
+            .transform((builder, type, classLoader, module) ->
+                builder.method(ElementMatchers.named("doDispatch"))
+                    .intercept(MethodDelegation.to(DispatcherInteceptor.class)))
+            .installOn(inst);
 
-        agentBuilder.type(ElementMatchers.nameStartsWith(packageName)).transform(transformer).installOn(inst);
-
-        //监听
-        AgentBuilder.Listener listener = new AgentBuilder.Listener() {
-            @Override
-            public void onDiscovery(String s, ClassLoader classLoader, JavaModule javaModule, boolean b) {
-
-            }
-
-            @Override
-            public void onTransformation(TypeDescription typeDescription, ClassLoader classLoader,
-                JavaModule javaModule, boolean b, DynamicType dynamicType) {
-                System.out.println("onTransformation：" + typeDescription);
-            }
-
-            @Override
-            public void onIgnored(TypeDescription typeDescription, ClassLoader classLoader, JavaModule javaModule,
-                boolean b) {
-
-            }
-
-            @Override
-            public void onError(String s, ClassLoader classLoader, JavaModule javaModule, boolean b,
-                Throwable throwable) {
-
-            }
-
-            @Override
-            public void onComplete(String s, ClassLoader classLoader, JavaModule javaModule, boolean b) {
-
-            }
-
-        };
-
-        agentBuilder.with(listener).installOn(inst);
-
+        new AgentBuilder.Default()
+            .type(ElementMatchers.isAnnotatedWith(named("org.springframework.stereotype.Service").or(named("org.springframework.web.bind.annotation.RestController"))))
+            .transform((builder, type, classLoader, module) ->
+                //builder.method(ElementMatchers.not(isStatic()).and(isPublic()).and(not(isDeclaredBy(Object.class))).and(ElementMatchers.isAnnotatedWith(ElementMatchers.nameStartsWith("org.springframework.beans.factory.annotation"))))
+                builder.method(ElementMatchers.not(isStatic()).and(isPublic()).and(ElementMatchers.any()))
+                    .intercept(MethodDelegation.to(SpringAnnotationInteceptor.class)))
+            .installOn(inst);
     }
 
     public static void agentmain(String args, Instrumentation inst) {
