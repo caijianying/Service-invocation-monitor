@@ -16,18 +16,10 @@ public class DispatcherInteceptor {
 
     @RuntimeType
     public static Object intercept(@Argument(0) HttpServletRequest request, @SuperCall Callable<?> callable) {
-        final StringBuilder in = new StringBuilder();
-        if (request.getParameterMap() != null && request.getParameterMap().size() > 0) {
-            request.getParameterMap().keySet().forEach(key -> in.append("key=" + key + "_value=" + request.getParameter(key) + ","));
-        }
-        long agentStart = System.currentTimeMillis();
         try {
             return callable.call();
         } catch (Exception e) {
-            System.out.println("Exception :" + e.getMessage());
             return null;
-        } finally {
-            System.out.println("path:" + request.getRequestURI() + "\n 入参:" + in + "\n 耗时 >>>>：" + (System.currentTimeMillis() - agentStart));
         }
     }
 }
