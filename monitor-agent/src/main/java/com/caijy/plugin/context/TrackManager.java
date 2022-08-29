@@ -2,6 +2,10 @@ package com.caijy.plugin.context;
 
 import java.util.Stack;
 
+import com.alibaba.fastjson.JSON;
+
+import com.caijy.plugin.utils.TraceSegmentBuilder;
+
 /**
  * @Author: caijy
  * @Description
@@ -9,7 +13,7 @@ import java.util.Stack;
  */
 public class TrackManager {
 
-    private static final ThreadLocal<Stack<String>> track = new ThreadLocal<Stack<String>>();
+    private static final InheritableThreadLocal<Stack<String>> track = new InheritableThreadLocal<Stack<String>>();
 
     private static String createSpan() {
         Stack<String> stack = track.get();
@@ -46,7 +50,9 @@ public class TrackManager {
         }
         String pop = stack.pop();
         if (stack.size() == 0) {
+            System.out.println(JSON.toJSONString(TraceSegmentBuilder.buildTraceSegment()));
             TimeCostManager.summary();
+            TraceSegmentBuilder.clear();
         }
         return pop;
     }

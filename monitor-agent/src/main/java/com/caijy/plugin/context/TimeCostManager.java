@@ -3,6 +3,8 @@ package com.caijy.plugin.context;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * @author liguang
  * @date 2022/7/7 星期四 3:14 下午
@@ -40,7 +42,7 @@ public class TimeCostManager {
             String serviceName = sortedService.get(i);
             long serviceTimeCost = serviceTimeCostMap.get(serviceName);
             builder.append(
-                String.format("     NO.%s    |  【%s】   | 【%s】ms     |\n", i+1, serviceName, serviceTimeCost));
+                String.format("     NO.%s    |  【%s】   | 【%s】ms     |\n", i + 1, serviceName, serviceTimeCost));
         }
         serviceTimeCostMap.clear();
         sortedService.clear();
