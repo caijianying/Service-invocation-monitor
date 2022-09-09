@@ -1,7 +1,7 @@
-package com.caijy.plugin;
+package com.caijy.plugin.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.LinkedList;
 
 import lombok.Data;
 
@@ -18,18 +18,28 @@ public class TraceSegment implements Serializable {
     private String methodName;
 
     /**
+     * enter
+     **/
+    private Long enterTimeStamp;
+
+    /**
+     * exit
+     **/
+    private Long exitTimeStamp;
+
+    /**
      * 耗时
      **/
     private String costTime;
 
     /**
-     * 子节点
-     **/
-    private TraceSegment childNode;
-
-    /**
      * 子方法
      **/
-    private List<TraceSegment> children;
+    private LinkedList<TraceSegment> children;
+
+    /**
+     * 当前节点深度
+     **/
+    private int depth;
 
 }

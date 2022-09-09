@@ -15,6 +15,6 @@ public interface ClassFilterConstants {
     );
 
     List<String> JDK_IGNORED_METHODS = Lists.newArrayList(
-        "toString"
+        "toString","hashCode"
     );
 }

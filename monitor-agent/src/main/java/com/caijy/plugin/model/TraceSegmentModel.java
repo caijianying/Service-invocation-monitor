@@ -1,6 +1,7 @@
-package com.caijy.plugin;
+package com.caijy.plugin.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,15 @@ public class TraceSegmentModel implements Serializable {
      * 1=enter或0=exit
      **/
     private Integer processFlag;
+
+    /**
+     * 方法耗时 只有退出方法才记录
+     **/
+    private long costTimeStamp;
+
+    /**
+     * 树深度
+     **/
+    private Integer depth;
 
 }

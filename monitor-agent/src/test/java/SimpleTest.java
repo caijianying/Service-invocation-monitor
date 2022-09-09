@@ -1,7 +1,7 @@
 import com.alibaba.fastjson.JSON;
 
-import com.caijy.plugin.TraceSegment;
-import com.caijy.plugin.TraceSegmentModel;
+import com.caijy.plugin.model.TraceSegment;
+import com.caijy.plugin.model.TraceSegmentModel;
 import com.caijy.plugin.utils.TraceSegmentBuilder;
 import org.junit.Test;
 
