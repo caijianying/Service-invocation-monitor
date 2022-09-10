@@ -42,4 +42,9 @@ public class TraceSegment implements Serializable {
      **/
     private int depth;
 
+    /**
+     * 父节点
+     **/
+    private TraceSegment parent;
+
 }
