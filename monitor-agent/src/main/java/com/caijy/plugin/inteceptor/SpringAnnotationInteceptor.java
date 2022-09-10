@@ -36,19 +36,26 @@ public class SpringAnnotationInteceptor {
             traceId = UUID.randomUUID().toString();
             TrackContext.setTraceId(traceId);
         }
-        int depth = increase();
-        TrackManager.createEntrySpan();
-        TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(1)
-            .methodName(clazz.getName() + "." + method.getName()).depth(depth).build());
-        //System.out.println(clazz.getName() + "." + method.getName()+" >>> enter.");
-        long startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-        Object call = callable.call();
-        long stopMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-        decrease();// 方法退出即减一 保证depth的准确性
-        TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(0).methodName(
-            clazz.getName() + "." + method.getName()).costTimeStamp(stopMilli - startMilli).depth(depth).build());
-        //System.out.println(clazz.getName() + "." + method.getName()+" >>> exit.");
-        TrackManager.getExitSpan();
+        Object call = null;
+        try {
+            int depth = increase();
+            TrackManager.createEntrySpan();
+            TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(1)
+                    .methodName(clazz.getName() + "." + method.getName()).depth(depth).build());
+            //System.out.println(clazz.getName() + "." + method.getName()+" >>> enter.");
+            long startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+            call = callable.call();
+            long stopMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+            // 方法退出即减一 保证depth的准确性
+            decrease();
+            TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(0).methodName(
+                    clazz.getName() + "." + method.getName()).costTimeStamp(stopMilli - startMilli).depth(depth).build());
+            //System.out.println(clazz.getName() + "." + method.getName()+" >>> exit.");
+            TrackManager.getExitSpan();
+        }catch (Throwable e){
+            System.out.println("Service Invocation Monitor | ERROR: An Error occurred! reason:"+e.getMessage());
+        }
+
         return call;
     }
 
