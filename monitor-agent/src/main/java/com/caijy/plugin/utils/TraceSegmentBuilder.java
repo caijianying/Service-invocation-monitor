@@ -1,12 +1,12 @@
 package com.caijy.plugin.utils;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.caijy.plugin.model.TraceSegment;
 import com.caijy.plugin.model.TraceSegmentModel;
 import com.google.common.collect.Lists;
@@ -16,11 +16,13 @@ import com.google.common.collect.Lists;
  * @date 2022/8/17 星期三 7:49 下午
  */
 public class TraceSegmentBuilder {
+    static Log log = LogFactory.getCurrentLogFactory().createLog(TraceSegmentBuilder.class);
 
     private static InheritableThreadLocal<Stack<TraceSegmentModel>> stackLocal
             = new InheritableThreadLocal<>();
 
     public static void add(TraceSegmentModel model) {
+
         Stack stack = stackLocal.get();
         if (Objects.isNull(stack)) {
             stack = new Stack();
@@ -35,13 +37,13 @@ public class TraceSegmentBuilder {
 
     public static TraceSegment buildTraceSegment() {
         TraceSegment root = doBuildTraceSegment();
-        System.out.println("buildTraceSegment >>>: " + JSON.toJSONString(root));
+        //System.out.println("buildTraceSegment >>>: " + JSON.toJSONString(root));
         return root;
     }
 
     static TraceSegment doBuildTraceSegment() {
         Stack<TraceSegmentModel> stack = stackLocal.get();
-//        System.out.println("doBuildTraceSegment >>>: " + JSON.toJSONString(stack));
+        //log.info("doBuildTraceSegment >>>: {}" , JSON.toJSONString(stack));
         TraceSegment root = new TraceSegment();
         root.setMethodName("Service Invocation Monitor | Result ");
 

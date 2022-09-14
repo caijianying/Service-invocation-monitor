@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 public interface ClassFilterConstants {
 
     List<String> MYBATIS_PLUS_IGNORED_METHODS = Lists.newArrayList(
-        "getBaseMapper"
+        "getBaseMapper","lambdaUpdate","lambdaQuery"
     );
 
     List<String> JDK_IGNORED_METHODS = Lists.newArrayList(
