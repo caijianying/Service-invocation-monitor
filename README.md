@@ -8,5 +8,4 @@
 
 ### 小Tips
 * 关于插件更多的详细介绍，可以查看我的技术文档，里面记录着插件从无到有的产生过程 http://docs.caijy.top/docs/mindoc/mindoc-1dp8rf5rr39u9
-* 若觉得有方便到您，欢迎Star哦.若有建议，请提Issue.有问题也可以发邮件到XiaoBaiCai5811@163.com.
-大家共同进步。
+* 若觉得有方便到您，欢迎Star哦.若有建议，请提Issue.大家共同进步。
