@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.3'
+version '1.0.3-fix'
 apply plugin: 'java'
 sourceCompatibility = 1.8
 jar.enabled = true
@@ -14,7 +14,6 @@ repositories {
 }
 
 dependencies {
-//    compile project(":monitor-agent")
     implementation fileTree(dir: 'libs', includes: ['*jar'])
 }
 
