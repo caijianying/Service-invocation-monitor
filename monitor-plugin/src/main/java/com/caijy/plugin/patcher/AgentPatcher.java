@@ -20,17 +20,22 @@ public class AgentPatcher extends JavaProgramPatcher {
     public void patchJavaParameters(Executor executor, RunProfile runProfile, JavaParameters javaParameters) {
         RunConfiguration runConfiguration = (RunConfiguration)runProfile;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
-        // -Dmonitor.package=com.apollo.config.test
+
+        // 包名优先从命令获取
+        String packageName = null;
         String packageParam = vmParametersList.getParameters().stream().filter(
             t -> t.indexOf("-Dmonitor.package=") != -1).findFirst().orElse(null);
-        if (null == packageParam) {
-            MessageUtil.warn("vm options is missing, you can add -Dmonitor.package to enable Link Monitoring! ");
-            return;
+        if (StringUtils.isNotBlank(packageParam)) {
+            packageName = packageParam.substring(packageParam.indexOf("=") + 1);
         }
-        String packageName = packageParam.substring(packageParam.indexOf("=") + 1);
 
         if (StringUtils.isBlank(packageName)) {
-            MessageUtil.warn("-Dmonitor.package do not have a correct value ! ");
+            // 默认使用自动类的包名
+            packageName = this.getMainClassPackageName(javaParameters.getMainClass());
+        }
+
+        if (StringUtils.isBlank(packageName)) {
+            MessageUtil.warn("vm options is missing, you can add -Dmonitor.package to enable Link Monitoring! ");
             return;
         }
         String agentCoreJarPath = PluginUtil.getAgentCoreJarPath();
@@ -42,5 +47,12 @@ public class AgentPatcher extends JavaProgramPatcher {
             "-javaagent:" + agentCoreJarPath + "=" + packageName);
         vmParametersList.addNotEmptyProperty("service-invocation-monitor.projectId",
             runConfiguration.getProject().getLocationHash());
+    }
+
+    private String getMainClassPackageName(String mainClass ){
+        if (StringUtils.isNotBlank(mainClass)){
+            return mainClass.substring(0,mainClass.lastIndexOf("."));
+        }
+        return null;
     }
 }
