@@ -7,7 +7,9 @@ import java.util.Stack;
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.caijy.plugin.enums.ConsoleColorEnum;
 import com.caijy.plugin.model.TraceSegment;
+import com.caijy.plugin.utils.ConfigBanner;
 import com.caijy.plugin.utils.TraceSegmentBuilder;
 
 /**
@@ -58,7 +60,7 @@ public class TrackManager {
             setDepth(traceSegment, 0);
             StringBuilder builder = new StringBuilder();
             append(builder, traceSegment);
-            System.out.println(builder);
+            System.out.println(ConfigBanner.toColorString(ConsoleColorEnum.GREEN, builder));
             TraceSegmentBuilder.clear();
         }
         return pop;
@@ -80,14 +82,20 @@ public class TrackManager {
                 for (int i = 0; i < traceSegment.getDepth(); i++) {
                     builder.append("    ");
                 }
-                builder.append("|--- " + traceSegment.getMethodName() + "【" + traceSegment.getCostTime() + "】ms" + "\n");
+
+                String format = String.format("|--- %s [%s] ms\n", traceSegment.getMethodName(),
+                    ConfigBanner.toColorString(Long.parseLong(traceSegment.getCostTime()) > 300 ? ConsoleColorEnum.RED
+                        : ConsoleColorEnum.GREEN, traceSegment.getCostTime()));
+                builder.append(format);
                 appendChild(builder, traceSegment.getChildren());
             }
         }
     }
 
     private static void append(StringBuilder builder, TraceSegment traceSegment) {
-        builder.append("|--- " + traceSegment.getMethodName() + "---|" + "\n");
+        builder.append(
+            ConfigBanner
+                .toColorString(ConsoleColorEnum.CYAN, "|--- " + traceSegment.getMethodName(), "---|") + "\n");
         appendChild(builder, traceSegment.getChildren());
     }
 
@@ -98,11 +106,6 @@ public class TrackManager {
         }
         return stack.peek();
     }
-
-    public static Integer getTrackSize() {
-        return track.get() == null ? 0 : track.get().size();
-    }
-
 }
 
 
