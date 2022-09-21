@@ -1,11 +1,13 @@
 package com.caijy.plugin;
 
 import java.lang.instrument.Instrumentation;
+import java.util.Objects;
 
+import cn.hutool.core.util.StrUtil;
+import com.caijy.plugin.constants.AgentConstant;
+import com.caijy.plugin.context.Config;
 import com.caijy.plugin.inteceptor.SpringAnnotationInteceptor;
-import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.builder.AgentBuilder;
-import net.bytebuddy.dynamic.scaffold.TypeValidation;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 
@@ -22,8 +24,15 @@ import static net.bytebuddy.matcher.ElementMatchers.named;
 public class TraceAgent {
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        System.out.println("receive the package ：" + agentArgs);
-        String packageName = agentArgs;
+        System.out.println(System.getProperty("spring.profiles.active"));
+        Config.initConfig(agentArgs);
+        Object configValue = Config.getConfig(AgentConstant.MONITOR_PACKAGE);
+        String packageName = Objects.isNull(configValue) ? null : configValue.toString();
+        if (StrUtil.isBlank(packageName)) {
+            System.out.println("agent load error, the monitorPackage is null!");
+            return;
+        }
+        System.out.println("receive the package ：" + packageName);
 
         new AgentBuilder.Default()
             .ignore(
@@ -35,7 +44,7 @@ public class TraceAgent {
                     .or(nameContains(".reflectasm."))
                     .or(nameStartsWith("sun.reflect"))
                     .or(ElementMatchers.isSynthetic())
-                    )
+            )
             .type(nameStartsWith(packageName).and(ElementMatchers.isAnnotatedWith(
                 named("org.springframework.stereotype.Service")
                     .or(named("org.springframework.web.bind.annotation.RestController")))))

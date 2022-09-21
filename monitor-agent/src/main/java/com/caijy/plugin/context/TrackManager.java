@@ -7,6 +7,7 @@ import java.util.Stack;
 import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.caijy.plugin.constants.AgentConstant;
 import com.caijy.plugin.enums.ConsoleColorEnum;
 import com.caijy.plugin.model.TraceSegment;
 import com.caijy.plugin.utils.ConfigBanner;
@@ -78,14 +79,18 @@ public class TrackManager {
 
     private static void appendChild(StringBuilder builder, List<TraceSegment> segments) {
         if (CollectionUtil.isNotEmpty(segments)) {
+            Long timeCostThreshold = Long.valueOf(
+                Config.getConfig(AgentConstant.MONITOR_TIME_COST_THRESHOLD).toString());
             for (TraceSegment traceSegment : segments) {
                 for (int i = 0; i < traceSegment.getDepth(); i++) {
                     builder.append("    ");
                 }
 
                 String format = String.format("|--- %s [%s] ms\n", traceSegment.getMethodName(),
-                    ConfigBanner.toColorString(Long.parseLong(traceSegment.getCostTime()) > 300 ? ConsoleColorEnum.RED
-                        : ConsoleColorEnum.GREEN, traceSegment.getCostTime()));
+                    ConfigBanner
+                        .toColorString(
+                            Long.parseLong(traceSegment.getCostTime()) > timeCostThreshold ? ConsoleColorEnum.RED
+                                : ConsoleColorEnum.GREEN, traceSegment.getCostTime()));
                 builder.append(format);
                 appendChild(builder, traceSegment.getChildren());
             }

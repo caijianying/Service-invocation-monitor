@@ -1,4 +1,6 @@
 rootProject.name = 'service-invocation-monitor'
 include 'monitor-agent'
+include 'monitor-agent-core'
 include 'monitor-plugin'
+
 
