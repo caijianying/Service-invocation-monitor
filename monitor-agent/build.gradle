@@ -31,7 +31,8 @@ tasks.withType(Javadoc) {
 shadowJar {
     manifest {
         attributes(
-                'Premain-Class': 'com.caijy.plugin.TraceAgent',
+                'Manifest-Version': '1.0',
+                'Premain-Class': 'com.caijy.agent.TraceAgent',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )

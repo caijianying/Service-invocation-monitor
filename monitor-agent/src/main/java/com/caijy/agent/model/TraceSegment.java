@@ -1,4 +1,4 @@
-package com.caijy.plugin.model;
+package com.caijy.agent.model;
 
 import java.io.Serializable;
 import java.util.LinkedList;

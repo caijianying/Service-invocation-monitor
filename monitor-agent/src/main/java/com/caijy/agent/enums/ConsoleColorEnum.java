@@ -1,4 +1,4 @@
-package com.caijy.plugin.enums;
+package com.caijy.agent.enums;
 
 /**
  * @author liguang

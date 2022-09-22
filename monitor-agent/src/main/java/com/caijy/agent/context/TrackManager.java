@@ -1,17 +1,15 @@
-package com.caijy.plugin.context;
+package com.caijy.agent.context;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import com.alibaba.fastjson.JSON;
-
 import cn.hutool.core.collection.CollectionUtil;
-import com.caijy.plugin.constants.AgentConstant;
-import com.caijy.plugin.enums.ConsoleColorEnum;
-import com.caijy.plugin.model.TraceSegment;
-import com.caijy.plugin.utils.ConfigBanner;
-import com.caijy.plugin.utils.TraceSegmentBuilder;
+import com.caijy.agent.core.constants.AgentConstant;
+import com.caijy.agent.enums.ConsoleColorEnum;
+import com.caijy.agent.model.TraceSegment;
+import com.caijy.agent.utils.ConfigBanner;
+import com.caijy.agent.utils.TraceSegmentBuilder;
 
 /**
  * @Author: caijy

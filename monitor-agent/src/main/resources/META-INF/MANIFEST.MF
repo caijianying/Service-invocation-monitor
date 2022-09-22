@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Agent-Class: com.caijy.plugin.TraceAgent
-Premain-Class:  com.caijy.plugin.TraceAgent
+Agent-Class: com.caijy.agent.TraceAgent
+Premain-Class:  com.caijy.agent.TraceAgent
 Can-Redefine-Classes: true
 Can-Retransform-Classes: true

@@ -1,14 +1,12 @@
-package com.caijy.plugin.utils;
+package com.caijy.agent.utils;
 
 import java.util.*;
-
-import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.caijy.plugin.model.TraceSegment;
-import com.caijy.plugin.model.TraceSegmentModel;
+import com.caijy.agent.model.TraceSegment;
+import com.caijy.agent.model.TraceSegmentModel;
 import com.google.common.collect.Lists;
 
 /**

@@ -1,12 +1,12 @@
-package com.caijy.plugin;
+package com.caijy.agent;
 
 import java.lang.instrument.Instrumentation;
 import java.util.Objects;
 
 import cn.hutool.core.util.StrUtil;
-import com.caijy.plugin.constants.AgentConstant;
-import com.caijy.plugin.context.Config;
-import com.caijy.plugin.inteceptor.SpringAnnotationInteceptor;
+import com.caijy.agent.core.constants.AgentConstant;
+import com.caijy.agent.context.Config;
+import com.caijy.agent.inteceptor.SpringAnnotationInteceptor;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;

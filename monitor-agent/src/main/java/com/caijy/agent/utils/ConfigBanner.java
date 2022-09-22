@@ -1,6 +1,6 @@
-package com.caijy.plugin.utils;
+package com.caijy.agent.utils;
 
-import com.caijy.plugin.enums.ConsoleColorEnum;
+import com.caijy.agent.enums.ConsoleColorEnum;
 
 /**
  * @author liguang

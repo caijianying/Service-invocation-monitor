@@ -1,6 +1,6 @@
-package com.caijy.plugin.utils;
+package com.caijy.agent.utils;
 
-import com.caijy.plugin.constants.ClassFilterConstants;
+import com.caijy.agent.core.constants.ClassFilterConstants;
 
 /**
  * @author liguang

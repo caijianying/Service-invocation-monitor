@@ -1,16 +1,4 @@
-import com.alibaba.fastjson.JSON;
-
-import com.caijy.plugin.model.TraceSegment;
-import com.caijy.plugin.model.TraceSegmentModel;
-import com.caijy.plugin.utils.TraceSegmentBuilder;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 /**
  * @author liguang

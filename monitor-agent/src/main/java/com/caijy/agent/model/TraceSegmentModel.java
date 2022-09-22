@@ -1,7 +1,6 @@
-package com.caijy.plugin.model;
+package com.caijy.agent.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

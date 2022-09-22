@@ -1,9 +1,9 @@
-package com.caijy.plugin.context;
+package com.caijy.agent.context;
 
 import java.util.Map;
 
 import cn.hutool.core.util.StrUtil;
-import com.caijy.plugin.constants.AgentConstant;
+import com.caijy.agent.core.constants.AgentConstant;
 import com.google.common.collect.Maps;
 
 /**
