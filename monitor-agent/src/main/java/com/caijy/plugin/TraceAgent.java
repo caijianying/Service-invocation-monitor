@@ -24,9 +24,8 @@ import static net.bytebuddy.matcher.ElementMatchers.named;
 public class TraceAgent {
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        System.out.println(System.getProperty("spring.profiles.active"));
-        Config.initConfig(agentArgs);
-        Object configValue = Config.getConfig(AgentConstant.MONITOR_PACKAGE);
+        Config.init(agentArgs);
+        Object configValue = Config.get(AgentConstant.MONITOR_PACKAGE);
         String packageName = Objects.isNull(configValue) ? null : configValue.toString();
         if (StrUtil.isBlank(packageName)) {
             System.out.println("agent load error, the monitorPackage is null!");

@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', includes: ['*jar'])
+    compile project(":monitor-agent-core")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

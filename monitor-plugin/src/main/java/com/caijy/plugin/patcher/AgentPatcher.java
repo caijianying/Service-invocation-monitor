@@ -16,6 +16,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AgentPatcher extends JavaProgramPatcher {
 
+    /**
+     * 监控的包名
+     **/
+    String MONITOR_PACKAGE = "-Dmonitor.package";
+
     @Override
     public void patchJavaParameters(Executor executor, RunProfile runProfile, JavaParameters javaParameters) {
         RunConfiguration runConfiguration = (RunConfiguration)runProfile;
@@ -24,9 +29,10 @@ public class AgentPatcher extends JavaProgramPatcher {
         // 包名优先从命令获取
         String packageName = null;
         String packageParam = vmParametersList.getParameters().stream().filter(
-            t -> t.indexOf("-Dmonitor.package=") != -1).findFirst().orElse(null);
+            t -> t.indexOf(MONITOR_PACKAGE) != -1).findFirst().orElse(null);
         if (StringUtils.isNotBlank(packageParam)) {
-            packageName = packageParam.substring(packageParam.indexOf("=") + 1);
+            int packageValueIndex = packageParam.indexOf("=");
+            packageName = packageValueIndex == -1 ? null : packageParam.substring(packageValueIndex + 1);
         }
 
         if (StringUtils.isBlank(packageName)) {
@@ -43,15 +49,18 @@ public class AgentPatcher extends JavaProgramPatcher {
             MessageUtil.warn("cannot load agent successfully !");
             return;
         }
+
+        vmParametersList.replaceOrAppend(MONITOR_PACKAGE,
+            String.format("%s=%s", MONITOR_PACKAGE, packageName));
         vmParametersList.addParametersString(
-            "-javaagent:" + agentCoreJarPath + "=" + packageName);
+            "-javaagent:" + agentCoreJarPath);
         vmParametersList.addNotEmptyProperty("service-invocation-monitor.projectId",
             runConfiguration.getProject().getLocationHash());
     }
 
-    private String getMainClassPackageName(String mainClass ){
-        if (StringUtils.isNotBlank(mainClass)){
-            return mainClass.substring(0,mainClass.lastIndexOf("."));
+    private String getMainClassPackageName(String mainClass) {
+        if (StringUtils.isNotBlank(mainClass)) {
+            return mainClass.substring(0, mainClass.lastIndexOf("."));
         }
         return null;
     }

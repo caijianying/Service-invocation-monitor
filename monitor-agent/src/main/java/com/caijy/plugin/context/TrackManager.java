@@ -80,7 +80,7 @@ public class TrackManager {
     private static void appendChild(StringBuilder builder, List<TraceSegment> segments) {
         if (CollectionUtil.isNotEmpty(segments)) {
             Long timeCostThreshold = Long.valueOf(
-                Config.getConfig(AgentConstant.MONITOR_TIME_COST_THRESHOLD).toString());
+                Config.get(AgentConstant.MONITOR_TIME_COST_THRESHOLD).toString());
             for (TraceSegment traceSegment : segments) {
                 for (int i = 0; i < traceSegment.getDepth(); i++) {
                     builder.append("    ");
