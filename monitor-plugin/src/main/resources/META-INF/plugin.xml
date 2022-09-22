@@ -13,6 +13,21 @@
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
+
+    <h3>V1.0.4</h3>
+    <ul>
+        <li>High time-consuming and low time-consuming links are displayed in different colors. By default, the link that is higher than [100 milliseconds] is judged to be a high time-consuming link. You can specify a specific value through the vm parameter 【-Dmonitor.timeCost.threshold=100】 in milliseconds.</li>
+        <li>The SpringBoot project uses the [package name where the startup class is located] by default, and the package name can be specified by the Vm parameter 【-Dmonitor.package】</li>
+        <li>Code structure adjustment</li>
+    </ul>
+
+    <h3>V1.0.4</h3>
+    <ul>
+        <li>高耗时和低耗时的链路，不同颜色区分显示。默认判断高于【100毫秒】的链路为高耗时链路，可通过vm参数【-Dmonitor.timeCost.threshold=100】指定具体数值，单位为毫秒。</li>
+        <li>SpringBoot项目默认使用【启动类所在的包名】，包名可通过Vm参数【-Dmonitor.package】指定</li>
+        <li>代码结构调整</li>
+    </ul>
+
     <h3>V1.0.3-fix</h3>
     <ul>
         <li>fixed some bugs</li>
