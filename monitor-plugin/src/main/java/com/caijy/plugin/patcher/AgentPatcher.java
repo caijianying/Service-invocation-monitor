@@ -21,14 +21,26 @@ public class AgentPatcher extends JavaProgramPatcher {
      **/
     String MONITOR_PACKAGE = "-Dmonitor.package";
 
+    /**
+     * MAVEN底层实现类的包名
+     **/
+    String MAVEN_PACKAGE = "org.codehaus";
+
+    /**
+     * SpringBootTest测试类底层实现类的包名
+     **/
+    String SPRING_BOOT_TEST_PACKAGE = "com.intellij";
+
+
+
     @Override
     public void patchJavaParameters(Executor executor, RunProfile runProfile, JavaParameters javaParameters) {
         RunConfiguration runConfiguration = (RunConfiguration)runProfile;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         String mainClass = javaParameters.getMainClass();
 
-        // 主要针对SpringBootTest和Maven底层实现类的过滤
-        if (StringUtils.isNotBlank(mainClass) && mainClass.startsWith("org.codehaus")){
+        // 主要针对Maven底层实现类的过滤
+        if (StringUtils.isNotBlank(mainClass) && mainClass.startsWith(MAVEN_PACKAGE)){
             return;
         }
         // 包名优先从命令获取
@@ -40,7 +52,7 @@ public class AgentPatcher extends JavaProgramPatcher {
             packageName = packageValueIndex == -1 ? null : packageParam.substring(packageValueIndex + 1);
         }
 
-        if (StringUtils.isBlank(packageName) && !mainClass.startsWith("com.intellij")) {
+        if (StringUtils.isBlank(packageName) && !mainClass.startsWith(SPRING_BOOT_TEST_PACKAGE)) {
             // 默认使用启动类的包名
             packageName = this.getMainClassPackageName(mainClass);
         }
