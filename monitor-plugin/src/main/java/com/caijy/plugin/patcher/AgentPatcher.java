@@ -26,7 +26,9 @@ public class AgentPatcher extends JavaProgramPatcher {
         RunConfiguration runConfiguration = (RunConfiguration)runProfile;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         String mainClass = javaParameters.getMainClass();
-        if (StringUtils.isNotBlank(mainClass) && (mainClass.startsWith("com.intellij") || mainClass.equals("org.codehaus.classworlds.Launcher"))){
+
+        // 主要针对SpringBootTest和Maven底层实现类的过滤
+        if (StringUtils.isNotBlank(mainClass) && mainClass.startsWith("org.codehaus")){
             return;
         }
         // 包名优先从命令获取
@@ -38,8 +40,8 @@ public class AgentPatcher extends JavaProgramPatcher {
             packageName = packageValueIndex == -1 ? null : packageParam.substring(packageValueIndex + 1);
         }
 
-        if (StringUtils.isBlank(packageName)) {
-            // 默认使用自动类的包名
+        if (StringUtils.isBlank(packageName) && !mainClass.startsWith("com.intellij")) {
+            // 默认使用启动类的包名
             packageName = this.getMainClassPackageName(mainClass);
         }
 
