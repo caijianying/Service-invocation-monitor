@@ -27,8 +27,8 @@ intellij {
 
 patchPluginXml {
     patchPluginXml {
-        sinceBuild.set("193")
-        untilBuild.set("222.*")
+        sinceBuild.set("201.1")
+        untilBuild.set("")
     }
 }
 
