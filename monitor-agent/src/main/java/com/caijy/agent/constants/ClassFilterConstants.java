@@ -1,4 +1,4 @@
-package com.caijy.agent.core.constants;
+package com.caijy.agent.constants;
 
 import java.util.List;
 

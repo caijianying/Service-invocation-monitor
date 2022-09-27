@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.caijy.agent.core.constants.AgentConstant;
+import com.caijy.agent.constants.AgentConstant;
 import com.caijy.agent.enums.ConsoleColorEnum;
 import com.caijy.agent.model.TraceSegment;
 import com.caijy.agent.utils.ConfigBanner;
