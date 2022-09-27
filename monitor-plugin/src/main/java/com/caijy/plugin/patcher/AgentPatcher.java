@@ -25,7 +25,10 @@ public class AgentPatcher extends JavaProgramPatcher {
     public void patchJavaParameters(Executor executor, RunProfile runProfile, JavaParameters javaParameters) {
         RunConfiguration runConfiguration = (RunConfiguration)runProfile;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
-
+        String mainClass = javaParameters.getMainClass();
+        if (StringUtils.isNotBlank(mainClass) && (mainClass.startsWith("com.intellij") || mainClass.equals("org.codehaus.classworlds.Launcher"))){
+            return;
+        }
         // 包名优先从命令获取
         String packageName = null;
         String packageParam = vmParametersList.getParameters().stream().filter(
@@ -37,21 +40,19 @@ public class AgentPatcher extends JavaProgramPatcher {
 
         if (StringUtils.isBlank(packageName)) {
             // 默认使用自动类的包名
-            packageName = this.getMainClassPackageName(javaParameters.getMainClass());
+            packageName = this.getMainClassPackageName(mainClass);
         }
 
-        if (StringUtils.isBlank(packageName)) {
-            MessageUtil.warn("vm options is missing, you can add -Dmonitor.package to enable Link Monitoring! ");
-            return;
-        }
         String agentCoreJarPath = PluginUtil.getAgentCoreJarPath();
         if (StringUtils.isBlank(agentCoreJarPath)) {
             MessageUtil.warn("cannot load agent successfully !");
             return;
         }
 
-        vmParametersList.replaceOrAppend(MONITOR_PACKAGE,
-            String.format("%s=%s", MONITOR_PACKAGE, packageName));
+        if (StringUtils.isNotBlank(packageName)) {
+            vmParametersList.replaceOrAppend(MONITOR_PACKAGE,
+                String.format("%s=%s", MONITOR_PACKAGE, packageName));
+        }
         vmParametersList.addParametersString(
             "-javaagent:" + agentCoreJarPath);
         vmParametersList.addNotEmptyProperty("service-invocation-monitor.projectId",

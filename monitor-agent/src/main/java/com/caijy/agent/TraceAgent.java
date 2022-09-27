@@ -8,7 +8,11 @@ import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.context.Config;
 import com.caijy.agent.inteceptor.SpringAnnotationInteceptor;
 import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.agent.builder.AgentBuilder.RawMatcher;
+import net.bytebuddy.description.annotation.AnnotationSource;
+import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.matcher.ElementMatcher.Junction;
 import net.bytebuddy.matcher.ElementMatchers;
 
 import static net.bytebuddy.matcher.ElementMatchers.isPublic;
@@ -27,11 +31,15 @@ public class TraceAgent {
         Config.init(agentArgs);
         Object configValue = Config.get(AgentConstant.MONITOR_PACKAGE);
         String packageName = Objects.isNull(configValue) ? null : configValue.toString();
-        if (StrUtil.isBlank(packageName)) {
-            System.out.println("agent load error, the monitorPackage is null!");
-            return;
+
+        Junction<? super TypeDescription> junction = ElementMatchers.isAnnotatedWith(
+            named("org.springframework.stereotype.Service")
+                .or(named("org.springframework.web.bind.annotation.RestController")));
+
+        if (StrUtil.isNotBlank(packageName)) {
+            System.out.println("receive the package ：" + packageName);
+            junction = junction.and(nameStartsWith(packageName));
         }
-        System.out.println("receive the package ：" + packageName);
 
         new AgentBuilder.Default()
             .ignore(
@@ -44,9 +52,7 @@ public class TraceAgent {
                     .or(nameStartsWith("sun.reflect"))
                     .or(ElementMatchers.isSynthetic())
             )
-            .type(nameStartsWith(packageName).and(ElementMatchers.isAnnotatedWith(
-                named("org.springframework.stereotype.Service")
-                    .or(named("org.springframework.web.bind.annotation.RestController")))))
+            .type(junction)
             .transform((builder, type, classLoader, module) ->
                 builder.method(ElementMatchers.not(isStatic()).and(isPublic()).and(ElementMatchers.any()))
                     .intercept(MethodDelegation.to(SpringAnnotationInteceptor.class)))
