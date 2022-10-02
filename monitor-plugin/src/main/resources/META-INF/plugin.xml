@@ -14,6 +14,20 @@
 
     <change-notes><![CDATA[
 
+    <h3>V1.0.5</h3>
+    <ul>
+        <li>fix: Fixed an issue where the monitoring package name was read incorrectly when starting the SpringBoot test case</li>
+        <li>fix: Fixed an issue where the latest version of Idea could not download the plugin</li>
+        <li>The IDEA plugin is optimized to monitor the startup command</li>
+    </ul>
+
+    <h3>V1.0.5</h3>
+    <ul>
+        <li>fix: 修复了启动SpringBoot的测试用例时，读取监控包名有误的问题</li>
+        <li>fix: 修复了Idea最新版本下载不了插件的问题</li>
+        <li>优化了idea插件对启动命令的监控</li>
+    </ul>
+
     <h3>V1.0.4</h3>
     <ul>
         <li>High time-consuming and low time-consuming links are displayed in different colors. By default, the link that is higher than [100 milliseconds] is judged to be a high time-consuming link. You can specify a specific value through the vm parameter 【-Dmonitor.timeCost.threshold=100】 in milliseconds.</li>
