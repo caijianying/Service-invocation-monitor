@@ -30,7 +30,7 @@ subprojects {
         implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.12.6'
         implementation group: 'net.bytebuddy', name: 'byte-buddy-agent', version: '1.12.6'
         // 单测
-        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompileOnly 'junit:junit:4.12'
     }
 }
 
