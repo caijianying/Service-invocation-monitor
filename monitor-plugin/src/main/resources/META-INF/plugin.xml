@@ -115,6 +115,14 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <java.programPatcher implementation="com.caijy.plugin.patcher.AgentPatcher"/>
+        <applicationConfigurable parentId="tools" instance="com.caijy.plugin.config.ToolsConfiguration"
+                                 id="com.caijy.plugin.config.ToolsConfiguration"
+                                 displayName="Service Invocation Monitor"/>
+        <!--数据持久化扩展点-->
+        <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting" />
+
+<!--        <toolWindow factoryClass="com.caijy.plugin.config.TranslatorToolsWindow"-->
+<!--                    id="com.caijy.plugin.config.TranslatorToolsWindow" anchor="right"/>-->
     </extensions>
 
     <actions>

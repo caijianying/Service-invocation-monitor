@@ -1,4 +1,4 @@
-package com.caijy.agent.constants;
+package com.caijy.agent.core.constants;
 
 /**
  * @author liguang

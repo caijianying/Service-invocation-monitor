@@ -9,4 +9,6 @@ public interface PluginAgentConstants {
      String AGENT_NAME="monitor-agent";
 
      String PLUGIN_ID="com.caijy.plugin";
+
+     String PLUGIN_NAME="Service Invocation Monitor";
 }
