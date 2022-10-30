@@ -41,7 +41,7 @@ public class AgentPatcher extends JavaProgramPatcher {
 
     @Override
     public void patchJavaParameters(Executor executor, RunProfile runProfile, JavaParameters javaParameters) {
-        RunConfiguration runConfiguration = (RunConfiguration)runProfile;
+        RunConfiguration runConfiguration = (RunConfiguration) runProfile;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         String mainClass = javaParameters.getMainClass();
 
@@ -52,7 +52,7 @@ public class AgentPatcher extends JavaProgramPatcher {
         // 包名优先从命令获取
         String packageName = null;
         String packageParam = vmParametersList.getParameters().stream().filter(
-            t -> t.indexOf(MONITOR_PACKAGE) != -1).findFirst().orElse(null);
+                t -> t.indexOf(MONITOR_PACKAGE) != -1).findFirst().orElse(null);
         if (StringUtils.isNotBlank(packageParam)) {
             int packageValueIndex = packageParam.indexOf("=");
             packageName = packageValueIndex == -1 ? null : packageParam.substring(packageValueIndex + 1);
@@ -71,21 +71,25 @@ public class AgentPatcher extends JavaProgramPatcher {
 
         if (StringUtils.isNotBlank(packageName)) {
             vmParametersList.replaceOrAppend(MONITOR_PACKAGE,
-                String.format("%s=%s", MONITOR_PACKAGE, packageName));
+                    String.format("%s=%s", MONITOR_PACKAGE, packageName));
         }
 
         // 优先拿用户自定义的阀值
         String threshold = vmParametersList.getParameters().stream().filter(
-            t -> t.indexOf(TIME_COST_THRESHOLD) != -1).findFirst().orElse(null);
-        if (StringUtils.isBlank(threshold)){
+                t -> t.indexOf(TIME_COST_THRESHOLD) != -1).findFirst().orElse(null);
+        if (StringUtils.isBlank(threshold)) {
             threshold = ToolsSetting.getInstance().timeCostThreshold;
+            if (StringUtils.isBlank(threshold)) {
+                threshold = String.valueOf(Commandinitializer.timeCostThreshold);
+                ToolsSetting.getInstance().timeCostThreshold = threshold;
+            }
         }
         vmParametersList.replaceOrAppend(TIME_COST_THRESHOLD,
-            String.format("%s=%s", TIME_COST_THRESHOLD, threshold));
+                String.format("%s=%s", TIME_COST_THRESHOLD, threshold));
         vmParametersList.addParametersString(
-            "-javaagent:" + agentCoreJarPath);
+                "-javaagent:" + agentCoreJarPath);
         vmParametersList.addNotEmptyProperty("service-invocation-monitor.projectId",
-            runConfiguration.getProject().getLocationHash());
+                runConfiguration.getProject().getLocationHash());
     }
 
     private String getMainClassPackageName(String mainClass) {

@@ -37,3 +37,6 @@ publishPlugin{
     token=System.getenv("pluginToken")
 }
 
+runIde {
+    jvmArgs '--add-exports', 'java.base/jdk.internal.vm=ALL-UNNAMED'
+}

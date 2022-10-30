@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
  * @author liguang
  * @date 2022/10/11 星期二 9:02 下午
  */
-@State(name = PluginAgentConstants.PLUGIN_NAME, storages = {@Storage(value = "translator.xml")})
+@State(name = PluginAgentConstants.PLUGIN_NAME, storages = {@Storage(value = "monitor-tools-setting.xml")})
 public class ToolsSetting implements PersistentStateComponent<ToolsSetting> {
 
     public String timeCostThreshold;
