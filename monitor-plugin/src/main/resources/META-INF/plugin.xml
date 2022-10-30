@@ -13,14 +13,14 @@
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
-    <h3>V1.0.5.1</h3>
+    <h3>V1.0.6</h3>
     <ul>
-        <li>Upgrade the plug-in version</li>
+        <li>Added Idea configuration entry for time-consuming options：Preferences -> tools -> Service Invocation Monitor</li>
     </ul>
 
-    <h3>V1.0.5.1</h3>
+    <h3>V1.0.6</h3>
     <ul>
-        <li>升级打包插件版本</li>
+        <li>为高耗时选项增加Idea配置入口：Preferences -> tools -> Service Invocation Monitor</li>
     </ul>
     <h3>V1.0.5</h3>
     <ul>
