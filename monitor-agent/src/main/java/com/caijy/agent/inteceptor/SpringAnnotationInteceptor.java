@@ -37,31 +37,39 @@ public class SpringAnnotationInteceptor {
             TrackContext.setTraceId(traceId);
         }
         Object call = null;
+
+        Long startMilli = null;
+        Integer depth = null;
         try {
-            int depth = increase();
+            depth = increase();
             TrackManager.createEntrySpan();
             TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(1)
-                    .methodName(clazz.getName() + "." + method.getName()).depth(depth).build());
-            //System.out.println(clazz.getName() + "." + method.getName()+" >>> enter.");
-            long startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-            call = callable.call();
+                .methodName(clazz.getName() + "." + method.getName()).depth(depth).build());
+            startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        } catch (Throwable e) {
+            System.out.println(
+                "Service Invocation Monitor | ERROR: before method invoke An Error occurred! reason:" + e.getMessage());
+        }
+
+        call = callable.call();
+
+        try {
             long stopMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
             // 方法退出即减一 保证depth的准确性
             decrease();
             TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(0).methodName(
-                    clazz.getName() + "." + method.getName()).costTimeStamp(stopMilli - startMilli).depth(depth).build());
-            //System.out.println(clazz.getName() + "." + method.getName()+" >>> exit.");
+                clazz.getName() + "." + method.getName()).costTimeStamp(stopMilli - startMilli).depth(depth).build());
             TrackManager.getExitSpan();
-        }catch (Throwable e){
-            System.out.println("Service Invocation Monitor | ERROR: An Error occurred! reason:"+e.getMessage());
+        } catch (Throwable e) {
+            System.out.println("Service Invocation Monitor | ERROR: after method invoke An Error occurred! reason:" + e.getMessage());
         }
 
         return call;
     }
 
-    private static int increase(){
+    private static int increase() {
         AtomicInteger depth = depthLocal.get();
-        if (depth == null){
+        if (depth == null) {
             depth = new AtomicInteger(0);
         }
         int result = depth.incrementAndGet();
@@ -69,9 +77,9 @@ public class SpringAnnotationInteceptor {
         return result;
     }
 
-    private static int decrease(){
+    private static int decrease() {
         AtomicInteger depth = depthLocal.get();
-        if (depth == null){
+        if (depth == null) {
             depth = new AtomicInteger(0);
         }
         int result = depth.decrementAndGet();
