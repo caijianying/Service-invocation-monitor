@@ -65,8 +65,11 @@ public class TrackManager {
             append(builder, traceSegment, consoleDTOList);
             String colorString = ConfigBanner.toColorString(ConsoleColorEnum.GREEN, builder);
             System.out.println(colorString);
-            FileCache.appendLines(Config.get(AgentConstant.MONITOR_AGENT_PATH).toString(),
-                Config.get(AgentConstant.MONITOR_PROJECT_CODE).toString(),consoleDTOList);
+            int sampleRate = Integer.valueOf(Config.get(AgentConstant.MONITOR_SAMPLE_RATE).toString());
+            if (consoleDTOList.size() <= sampleRate){
+                FileCache.appendLines(Config.get(AgentConstant.MONITOR_AGENT_PATH).toString(),
+                        Config.get(AgentConstant.MONITOR_PROJECT_CODE).toString(),consoleDTOList);
+            }
             TraceSegmentBuilder.clear();
         }
         return pop;

@@ -2,7 +2,8 @@ package com.caijy.plugin.config;
 
 import com.caijy.agent.core.command.Commandinitializer;
 import com.caijy.agent.core.constants.AgentConstant;
-import com.caijy.plugin.constants.PluginAgentConstants;
+import com.caijy.plugin.constants.PluginAgentConstant;
+import com.caijy.plugin.constants.ToolSettingsConstant;
 import com.caijy.plugin.listener.UseSystemActionListener;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.options.Configurable;
@@ -47,9 +48,9 @@ public class ToolsConfiguration implements Configurable {
             textField.setText(this.getCommandValue(entry));
             // 焦点监听
             textField.addFocusListener(
-                new TextFieldListener(textField, entry.getValue()));
-            // 设置按钮名字 TODO 这个text每个命令项要区分
-            JButton systemBtn = new JButton("Use System");
+                    new TextFieldListener(textField, entry.getValue()));
+            // 设置按钮名字
+            JButton systemBtn = new JButton(this.getCommandDesc(entry));
             // 设置Action
             systemBtn.addActionListener(new UseSystemActionListener(textField, this));
 
@@ -69,10 +70,11 @@ public class ToolsConfiguration implements Configurable {
     /**
      * 命令k-> 命令名称，v-> 默认值
      * 优先拿缓存的值
-     * @author liguang
-     * @date 2022/12/15 6:21 下午
+     *
      * @param entry:
      * @return
+     * @author liguang
+     * @date 2022/12/15 6:21 下午
      **/
     private String getCommandValue(Map.Entry<String, String> entry) {
 
@@ -88,9 +90,21 @@ public class ToolsConfiguration implements Configurable {
         return null;
     }
 
+    private String getCommandDesc(Map.Entry<String, String> entry) {
+
+        if (entry.getKey().contains(AgentConstant.MONITOR_TIME_COST_THRESHOLD)) {
+            return ToolSettingsConstant.DESC_TIME_COST_THRESHOLD;
+        }
+
+        if (entry.getKey().contains(AgentConstant.MONITOR_SAMPLE_RATE)) {
+            return ToolSettingsConstant.DESC_SAMPLE_RATE;
+        }
+        return null;
+    }
+
     @Override
     public @ConfigurableName String getDisplayName() {
-        return PluginAgentConstants.PLUGIN_NAME;
+        return PluginAgentConstant.PLUGIN_NAME;
     }
 
     @Override
@@ -111,9 +125,11 @@ public class ToolsConfiguration implements Configurable {
             Commandinitializer.DEFAULT_COMMANDS_KV.put(Commandinitializer.DEFAULT_COMMANDS.get(i), textField.getText());
         }
 
-        String commandValue = Commandinitializer.DEFAULT_COMMANDS_KV.get(
-            Commandinitializer.formatCommand(AgentConstant.MONITOR_TIME_COST_THRESHOLD));
-        ToolsSetting.getInstance().timeCostThreshold = commandValue;
+        // 存入阀值
+        ToolsSetting.getInstance().timeCostThreshold = Commandinitializer.DEFAULT_COMMANDS_KV.get(Commandinitializer.formatCommand(AgentConstant.MONITOR_TIME_COST_THRESHOLD));
+
+        // 存入采样率
+        ToolsSetting.getInstance().sampleRate=Commandinitializer.DEFAULT_COMMANDS_KV.get(Commandinitializer.formatCommand(AgentConstant.MONITOR_SAMPLE_RATE));
     }
 
     public JPanel getjPanel() {

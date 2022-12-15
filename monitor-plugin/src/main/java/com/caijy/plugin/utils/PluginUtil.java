@@ -2,7 +2,6 @@ package com.caijy.plugin.utils;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import cn.hutool.core.util.StrUtil;
 import com.caijy.agent.core.console.TraceConsoleDTO;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.core.utils.FileCache;
-import com.caijy.plugin.constants.PluginAgentConstants;
+import com.caijy.plugin.constants.PluginAgentConstant;
 import com.caijy.plugin.ui.MonitorOutputToolWindow;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
@@ -33,7 +32,7 @@ public class PluginUtil {
     private static final IdeaPluginDescriptor IDEA_PLUGIN_DESCRIPTOR;
 
     static {
-        PluginId pluginId = PluginId.getId(PluginAgentConstants.PLUGIN_ID);
+        PluginId pluginId = PluginId.getId(PluginAgentConstant.PLUGIN_ID);
         IDEA_PLUGIN_DESCRIPTOR = PluginManagerCore.getPlugin(pluginId);
     }
 
@@ -43,7 +42,7 @@ public class PluginUtil {
      * @return String
      */
     public static String getAgentCoreJarPath() {
-        return getJarPathByStartWith(PluginAgentConstants.AGENT_NAME);
+        return getJarPathByStartWith(PluginAgentConstant.AGENT_NAME);
     }
 
     /**
