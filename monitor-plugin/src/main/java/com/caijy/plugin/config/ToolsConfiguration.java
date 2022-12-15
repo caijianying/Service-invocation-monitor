@@ -17,6 +17,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import java.util.List;
+import java.util.Map;
 
 import com.intellij.openapi.util.NlsContexts.ConfigurableName;
 
@@ -41,18 +42,16 @@ public class ToolsConfiguration implements Configurable {
         Commandinitializer.DEFAULT_COMMANDS_KV.entrySet().stream().forEach(entry -> {
             // 设置命令行
             JLabel command = new JLabel(entry.getKey() + "：");
-            // 优先拿缓存的值
-            String costThreshold = ToolsSetting.getInstance().timeCostThreshold;
             // 设置回显
             JTextField textField = new JTextField();
-            textField.setText(StringUtils.isNotBlank(costThreshold) ? costThreshold : entry.getValue());
+            textField.setText(this.getCommandValue(entry));
             // 焦点监听
             textField.addFocusListener(
                 new TextFieldListener(textField, entry.getValue()));
-            // 设置按钮名字
+            // 设置按钮名字 TODO 这个text每个命令项要区分
             JButton systemBtn = new JButton("Use System");
             // 设置Action
-            systemBtn.addActionListener(new UseSystemActionListener(textField,this));
+            systemBtn.addActionListener(new UseSystemActionListener(textField, this));
 
             jPanel.add(command);
             jPanel.add(textField);
@@ -65,6 +64,28 @@ public class ToolsConfiguration implements Configurable {
         for (int i = 0; i < restRow; i++) {
             jPanel.add(new JLabel());
         }
+    }
+
+    /**
+     * 命令k-> 命令名称，v-> 默认值
+     * 优先拿缓存的值
+     * @author liguang
+     * @date 2022/12/15 6:21 下午
+     * @param entry:
+     * @return
+     **/
+    private String getCommandValue(Map.Entry<String, String> entry) {
+
+        if (entry.getKey().contains(AgentConstant.MONITOR_TIME_COST_THRESHOLD)) {
+            String costThreshold = ToolsSetting.getInstance().timeCostThreshold;
+            return StringUtils.isNotBlank(costThreshold) ? costThreshold : entry.getValue();
+        }
+
+        if (entry.getKey().contains(AgentConstant.MONITOR_SAMPLE_RATE)) {
+            String sampleRate = ToolsSetting.getInstance().sampleRate;
+            return StringUtils.isNotBlank(sampleRate) ? sampleRate : entry.getValue();
+        }
+        return null;
     }
 
     @Override
