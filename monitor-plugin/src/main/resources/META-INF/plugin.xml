@@ -119,13 +119,9 @@
                                  id="com.caijy.plugin.config.ToolsConfiguration"
                                  displayName="Service Invocation Monitor"/>
         <!--数据持久化扩展点-->
-        <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting" />
+        <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting"/>
 
-<!--        <toolWindow factoryClass="com.caijy.plugin.config.TranslatorToolsWindow"-->
-<!--                    id="com.caijy.plugin.config.TranslatorToolsWindow" anchor="right"/>-->
+        <toolWindow factoryClass="com.caijy.plugin.ui.MonitorOutputToolWindow"
+                    id="Monitor" anchor="bottom"/>
     </extensions>
-
-    <actions>
-
-    </actions>
 </idea-plugin>

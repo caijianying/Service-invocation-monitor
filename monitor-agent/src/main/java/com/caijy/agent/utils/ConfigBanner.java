@@ -66,7 +66,7 @@ public class ConfigBanner {
     public static void printBanner() {
         String envInfo = getConfigRuntimeInfo();
         String bannerStr = toColorString(ConsoleColorEnum.BRIGHT_MAGENTA, configBanner, ConsoleColorEnum.GREEN, envInfo,
-            ConsoleColorEnum.FAINT);
+            ConsoleColorEnum.WHITE);
         System.out.println(bannerStr);
     }
 

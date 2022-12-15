@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public class ToolsSetting implements PersistentStateComponent<ToolsSetting> {
 
     public String timeCostThreshold;
+    public String sampleRate;
 
     public static ToolsSetting getInstance() {
         return ApplicationManager.getApplication().getService(ToolsSetting.class);

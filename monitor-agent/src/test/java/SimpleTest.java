@@ -15,5 +15,10 @@ public class SimpleTest {
 
 //        HashSet<Integer> hashSet = Sets.newHashSet(2, 3, 1, 4, 5);
 //        System.out.println(hashSet.stream().sorted().collect(Collectors.toList()));
+
+    }
+
+    public static void main(String[] args) {
+        ConfigBanner.printBanner();
     }
 }

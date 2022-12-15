@@ -24,7 +24,7 @@ public class UseSystemActionListener extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        textField.setText(String.valueOf(Commandinitializer.timeCostThreshold));
+        textField.setText(String.valueOf(Commandinitializer.DEFAULT_VALUE_TIME_COST_THRESHOLD));
         toolsConfiguration.apply();
     }
 }
