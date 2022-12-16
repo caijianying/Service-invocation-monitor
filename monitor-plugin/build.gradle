@@ -24,6 +24,11 @@ intellij {
     plugins = ['java']
     type.set("IU")
     localPath.set("/Applications/IntelliJ IDEA.app")
+    tasks {
+        "buildSearchableOptions" {
+            enabled = false
+        }
+    }
 }
 
 patchPluginXml {

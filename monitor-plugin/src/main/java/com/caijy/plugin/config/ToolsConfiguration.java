@@ -4,6 +4,7 @@ import com.caijy.agent.core.command.Commandinitializer;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.plugin.constants.PluginAgentConstant;
 import com.caijy.plugin.constants.ToolSettingsConstant;
+import com.caijy.plugin.dto.CommandDTO;
 import com.caijy.plugin.listener.UseSystemActionListener;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.options.Configurable;
@@ -41,16 +42,18 @@ public class ToolsConfiguration implements Configurable {
         jPanel = new JPanel(new GridLayout(row, column));
 
         Commandinitializer.DEFAULT_COMMANDS_KV.entrySet().stream().forEach(entry -> {
-            // 设置命令行
-            JLabel command = new JLabel(entry.getKey() + "：");
-            // 设置回显
+            // 拿到各个命令的展示信息
+            CommandDTO commandDTO = this.getCommandDTO(entry);
+            // 1. 设置命令行
+            JLabel command = new JLabel(commandDTO.getCommand());
+            // 2. 设置回显
             JTextField textField = new JTextField();
-            textField.setText(this.getCommandValue(entry));
+            textField.setText(commandDTO.getCommandValue());
             // 焦点监听
             textField.addFocusListener(
-                    new TextFieldListener(textField, entry.getValue()));
-            // 设置按钮名字
-            JButton systemBtn = new JButton(this.getCommandDesc(entry));
+                new TextFieldListener(textField, entry.getValue()));
+            // 3.设置按钮名字
+            JButton systemBtn = new JButton(commandDTO.getSysBtnName());
             // 设置Action
             systemBtn.addActionListener(new UseSystemActionListener(textField, this));
 
@@ -68,37 +71,37 @@ public class ToolsConfiguration implements Configurable {
     }
 
     /**
-     * 命令k-> 命令名称，v-> 默认值
+     * 命令
      * 优先拿缓存的值
      *
      * @param entry:
      * @return
      * @author liguang
-     * @date 2022/12/15 6:21 下午
+     * @date 2022/12/16 10:53 上午
      **/
-    private String getCommandValue(Map.Entry<String, String> entry) {
-
-        if (entry.getKey().contains(AgentConstant.MONITOR_TIME_COST_THRESHOLD)) {
+    private CommandDTO getCommandDTO(Map.Entry<String, String> entry) {
+        String commandName = entry.getKey();
+        CommandDTO commandDTO = new CommandDTO();
+        // 命令项
+        commandDTO.setCommand(String.format("%s:", commandName));
+        if (commandName.contains(AgentConstant.MONITOR_TIME_COST_THRESHOLD)) {
+            // 命令值
             String costThreshold = ToolsSetting.getInstance().timeCostThreshold;
-            return StringUtils.isNotBlank(costThreshold) ? costThreshold : entry.getValue();
+            commandDTO.setCommandValue(StringUtils.isNotBlank(costThreshold) ? costThreshold : entry.getValue());
+            // 按钮名称
+            commandDTO.setSysBtnName(ToolSettingsConstant.DESC_TIME_COST_THRESHOLD);
+            return commandDTO;
         }
 
-        if (entry.getKey().contains(AgentConstant.MONITOR_SAMPLE_RATE)) {
+        if (commandName.contains(AgentConstant.MONITOR_SAMPLE_RATE)) {
+            // 命令值
             String sampleRate = ToolsSetting.getInstance().sampleRate;
-            return StringUtils.isNotBlank(sampleRate) ? sampleRate : entry.getValue();
-        }
-        return null;
-    }
-
-    private String getCommandDesc(Map.Entry<String, String> entry) {
-
-        if (entry.getKey().contains(AgentConstant.MONITOR_TIME_COST_THRESHOLD)) {
-            return ToolSettingsConstant.DESC_TIME_COST_THRESHOLD;
+            commandDTO.setCommandValue(StringUtils.isNotBlank(sampleRate) ? sampleRate : entry.getValue());
+            // 按钮名称
+            commandDTO.setSysBtnName(ToolSettingsConstant.DESC_SAMPLE_RATE);
+            return commandDTO;
         }
 
-        if (entry.getKey().contains(AgentConstant.MONITOR_SAMPLE_RATE)) {
-            return ToolSettingsConstant.DESC_SAMPLE_RATE;
-        }
         return null;
     }
 
@@ -126,10 +129,12 @@ public class ToolsConfiguration implements Configurable {
         }
 
         // 存入阀值
-        ToolsSetting.getInstance().timeCostThreshold = Commandinitializer.DEFAULT_COMMANDS_KV.get(Commandinitializer.formatCommand(AgentConstant.MONITOR_TIME_COST_THRESHOLD));
+        ToolsSetting.getInstance().timeCostThreshold = Commandinitializer.DEFAULT_COMMANDS_KV.get(
+            Commandinitializer.formatCommand(AgentConstant.MONITOR_TIME_COST_THRESHOLD));
 
         // 存入采样率
-        ToolsSetting.getInstance().sampleRate=Commandinitializer.DEFAULT_COMMANDS_KV.get(Commandinitializer.formatCommand(AgentConstant.MONITOR_SAMPLE_RATE));
+        ToolsSetting.getInstance().sampleRate = Commandinitializer.DEFAULT_COMMANDS_KV.get(
+            Commandinitializer.formatCommand(AgentConstant.MONITOR_SAMPLE_RATE));
     }
 
     public JPanel getjPanel() {
