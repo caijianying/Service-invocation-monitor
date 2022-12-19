@@ -14,9 +14,9 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.8.5'
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation rootProject.ext.dependencies["javax-servlet"]
+    implementation rootProject.ext.dependencies["hutool-all"]
+    implementation rootProject.ext.dependencies["guava"]
     implementation project(":monitor-agent-core")
 }
 
