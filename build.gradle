@@ -1,3 +1,4 @@
+apply from :'config.gradle'
 //所有项目配置
 allprojects {
     group 'com.caijy.plugin'

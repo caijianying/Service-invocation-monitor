@@ -1,0 +1,6 @@
+ext{
+    plugin=[
+        agentTargetJarModule : "monitor-plugin"
+
+    ]
+}

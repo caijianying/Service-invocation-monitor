@@ -43,7 +43,7 @@ shadowJar {
 task pack(type: Copy) {
     sourceSets.main.resources.srcDirs.each {
         from tasks.shadowJar
-        into "$buildDir/../../monitor-plugin/build/idea-sandbox/plugins/monitor-plugin/lib"
+        into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
     }
 }
 
