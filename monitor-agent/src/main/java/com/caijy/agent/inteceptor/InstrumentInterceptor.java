@@ -3,8 +3,10 @@ package com.caijy.agent.inteceptor;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.caijy.agent.context.TrackManager;
 import com.caijy.agent.model.TraceSegmentModel;
 import com.caijy.agent.utils.TraceSegmentBuilder;
@@ -20,40 +22,51 @@ import net.bytebuddy.implementation.bind.annotation.This;
  */
 public class InstrumentInterceptor {
 
-    private MethodAroundInterceptor interceptor;
+    private List<MethodAroundInterceptor> interceptors;
 
-    public InstrumentInterceptor(MethodAroundInterceptor interceptor) {
-        this.interceptor = interceptor;
+    public InstrumentInterceptor(List<MethodAroundInterceptor> interceptors) {
+        this.interceptors = interceptors;
     }
 
     @RuntimeType
     public Object intercept(@This Object obj, @Origin Class<?> clazz, @AllArguments Object[] allArguments,
         @Origin Method method,
         @SuperCall Callable<?> callable) throws Throwable {
-
+        System.err.println(clazz.getName() + "." + method.getName() + ">>> enter.");
         MethodInvocationContext context = new MethodInvocationContext();
-        try {
-            this.interceptor.beforeMethod(obj, method, allArguments, method.getParameterTypes(), context);
-        } catch (Throwable e) {
-            System.out.println(
-                "Service Invocation Monitor | ERROR: before method invoke An Error occurred! reason:" + e.getMessage());
-        } finally {
-            System.out.println(
-                "Service Invocation Monitor | SUCCESS: before method invoke ");
-        }
+        if (CollectionUtil.isNotEmpty(interceptors)) {
+            for (MethodAroundInterceptor interceptor : interceptors) {
+                try {
+                    interceptor.beforeMethod(obj, clazz, method, allArguments, method.getParameterTypes(), context);
+                } catch (Throwable e) {
+                    System.out.println(
+                        "Service Invocation Monitor | ERROR: before method invoke An Error occurred! reason:" + e
+                            .getMessage());
+                    e.printStackTrace();
+                } finally {
+                    System.out.println(
+                        "Service Invocation Monitor | SUCCESS: before method invoke ");
+                }
 
+            }
+        }
         Object call = callable.call();
-
-        try {
-            this.interceptor.afterMethod(obj, method, allArguments, method.getParameterTypes(), context);
-        } catch (Throwable e) {
-            System.out.println(
-                "Service Invocation Monitor | ERROR: after method invoke An Error occurred! reason:" + e.getMessage());
-        } finally {
-            System.out.println(
-                "Service Invocation Monitor | SUCCESS: after method invoke ");
+        System.err.println(clazz.getName() + "." + method.getName() + ">>> exit.");
+        if (CollectionUtil.isNotEmpty(interceptors)) {
+            for (MethodAroundInterceptor interceptor : interceptors) {
+                try {
+                    interceptor.afterMethod(obj, clazz, method, allArguments, method.getParameterTypes(), context);
+                } catch (Throwable e) {
+                    System.out.println(
+                        "Service Invocation Monitor | ERROR: after method invoke An Error occurred! reason:" + e
+                            .getMessage());
+                    e.printStackTrace();
+                } finally {
+                    System.out.println(
+                        "Service Invocation Monitor | SUCCESS: after method invoke ");
+                }
+            }
         }
-
         return call;
     }
 }

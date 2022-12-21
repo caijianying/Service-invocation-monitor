@@ -9,6 +9,8 @@ import com.caijy.agent.context.Config;
 import com.caijy.agent.inteceptor.DubboInterceptor;
 import com.caijy.agent.inteceptor.InstrumentInterceptor;
 import com.caijy.agent.inteceptor.SpringAnnotationInteceptor;
+import com.caijy.agent.inteceptor.SpringInterceptor;
+import com.google.common.collect.Lists;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
@@ -17,11 +19,13 @@ import net.bytebuddy.matcher.ElementMatcher.Junction;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.utility.JavaModule;
 
+import static net.bytebuddy.matcher.ElementMatchers.isInterface;
 import static net.bytebuddy.matcher.ElementMatchers.isPublic;
 import static net.bytebuddy.matcher.ElementMatchers.isStatic;
 import static net.bytebuddy.matcher.ElementMatchers.nameContains;
 import static net.bytebuddy.matcher.ElementMatchers.nameStartsWith;
 import static net.bytebuddy.matcher.ElementMatchers.named;
+import static net.bytebuddy.matcher.ElementMatchers.not;
 
 /**
  * @author liguang
@@ -43,7 +47,13 @@ public class TraceAgent {
         //    junction = junction.and(nameStartsWith(packageName));
         //}
 
-        Junction<? super TypeDescription> junction = ElementMatchers.named("com.alibaba.dubbo.monitor.support.MonitorFilter").or(named("org.apache.dubbo.monitor.support.MonitorFilter"));
+        Junction<? super TypeDescription> judge = ElementMatchers.isAnnotatedWith(
+            named("org.springframework.stereotype.Service")
+                .or(named("org.springframework.web.bind.annotation.RestController")));
+        judge = judge.and(not(isInterface()));
+        Junction<? super TypeDescription> junction = judge.or(
+            ElementMatchers.named("com.alibaba.dubbo.monitor.support.MonitorFilter")
+                .or(named("org.apache.dubbo.monitor.support.MonitorFilter")));
 
         new AgentBuilder.Default()
             .ignore(
@@ -59,7 +69,8 @@ public class TraceAgent {
             .type(junction)
             .transform((builder, type, classLoader, module) ->
                 builder.method(ElementMatchers.not(isStatic()).and(isPublic()).and(ElementMatchers.any()))
-                    .intercept(MethodDelegation.to(new InstrumentInterceptor(new DubboInterceptor()))))
+                    .intercept(MethodDelegation.to(new InstrumentInterceptor(
+                        Lists.newArrayList(new DubboInterceptor(), new SpringInterceptor())))))
             .installOn(inst);
     }
 
@@ -67,17 +78,18 @@ public class TraceAgent {
 
     }
 
-    private static class Transformer implements AgentBuilder.Transformer {
-
-        @Override
-        public DynamicType.Builder<?> transform(final DynamicType.Builder<?> builder,
-            final TypeDescription typeDescription,
-            final ClassLoader classLoader,
-            final JavaModule module) {
-
-            builder.method(ElementMatchers.not(isStatic()).and(ElementMatchers.named("invoke").or(named("makeWrapper"))))
-                .intercept(MethodDelegation.to(new InstrumentInterceptor(new DubboInterceptor())));
-            return builder;
-        }
-    }
+    //private static class Transformer implements AgentBuilder.Transformer {
+    //
+    //    @Override
+    //    public DynamicType.Builder<?> transform(final DynamicType.Builder<?> builder,
+    //        final TypeDescription typeDescription,
+    //        final ClassLoader classLoader,
+    //        final JavaModule module) {
+    //
+    //        builder.method(
+    //            ElementMatchers.not(isStatic()).and(ElementMatchers.named("invoke").or(named("makeWrapper"))))
+    //            .intercept(MethodDelegation.to(new InstrumentInterceptor(new DubboInterceptor())));
+    //        return builder;
+    //    }
+    //}
 }

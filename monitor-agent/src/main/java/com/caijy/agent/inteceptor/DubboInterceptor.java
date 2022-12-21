@@ -1,6 +1,7 @@
 package com.caijy.agent.inteceptor;
 
 import java.lang.reflect.Method;
+
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -10,7 +11,8 @@ import com.alibaba.fastjson.JSON;
 public class DubboInterceptor implements MethodAroundInterceptor {
 
     @Override
-    public void beforeMethod(Object obj, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
+    public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments,
+        Class<?>[] argumentsTypes,
         MethodInvocationContext context) throws Throwable {
         //Invoker invoker = (Invoker) allArguments[0];
         //Invocation invocation = (Invocation) allArguments[1];
@@ -18,18 +20,16 @@ public class DubboInterceptor implements MethodAroundInterceptor {
         //boolean isConsumer = rpcContext.isConsumerSide();
         //URL requestURL = invoker.getUrl();
 
-        System.out.println("DubboInterceptor.beforeMethod >> obj: " + JSON.toJSONString(obj));
-        System.out.println("DubboInterceptor.beforeMethod >> method: " + JSON.toJSONString(method));
-        System.out.println("DubboInterceptor.beforeMethod >> allArguments: " + allArguments);
-        System.out.println("DubboInterceptor.beforeMethod >> argumentsTypes: " + argumentsTypes);
+        //System.out.println("DubboInterceptor.beforeMethod >> method: " + JSON.toJSONString(method));
+        //System.out.println("DubboInterceptor.beforeMethod >> allArguments: " + allArguments);
+        //System.out.println("DubboInterceptor.beforeMethod >> argumentsTypes: " + argumentsTypes);
     }
 
     @Override
-    public void afterMethod(Object obj, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
+    public void afterMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
         MethodInvocationContext context) throws Throwable {
-        System.out.println("DubboInterceptor.afterMethod >> obj: " + JSON.toJSONString(obj));
-        System.out.println("DubboInterceptor.afterMethod >> method: " + JSON.toJSONString(method));
-        System.out.println("DubboInterceptor.afterMethod >> allArguments: " + allArguments);
-        System.out.println("DubboInterceptor.afterMethod >> argumentsTypes: " + argumentsTypes);
+        //System.out.println("DubboInterceptor.afterMethod >> method: " + JSON.toJSONString(method));
+        //System.out.println("DubboInterceptor.afterMethod >> allArguments: " + allArguments);
+        //System.out.println("DubboInterceptor.afterMethod >> argumentsTypes: " + argumentsTypes);
     }
 }
