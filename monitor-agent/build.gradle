@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.2.1'
+version "$rootProject.ext.plugin.version"
 sourceCompatibility = 1.8
 
 
@@ -46,15 +46,7 @@ shadowJar {
 }
 
 // 移动agent包到plugin包下
-task moveToPlugin(type: Copy) {
-    sourceSets.main.resources.srcDirs.each {
-        from tasks.shadowJar
-        into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
-    }
-}
-
-// 移动agent插件到plugin包下
-task packALLBuildDirLibs(type: Copy) {
+task packAgent(type: Copy, dependsOn: shadowJar) {
     sourceSets.main.resources.srcDirs.each {
         from "$buildDir/libs"
         into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"

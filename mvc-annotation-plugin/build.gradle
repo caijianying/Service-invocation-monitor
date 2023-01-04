@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly rootProject.ext.dependencies["spring-web"]
     implementation project(":monitor-agent-core")
 }
 

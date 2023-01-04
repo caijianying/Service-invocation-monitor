@@ -10,10 +10,7 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    implementation rootProject.ext.dependencies["javax-servlet"]
     implementation rootProject.ext.dependencies["hutool-all"]
-    implementation rootProject.ext.dependencies["guava"]
     compileOnly rootProject.ext.dependencies["apache-dubbo"]
     implementation project(":monitor-agent-core")
 }
@@ -27,13 +24,9 @@ tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
 
-task packDubbo(type: Copy) {
+task packPlugin(type: Copy, dependsOn: build) {
     sourceSets.main.resources.srcDirs.each {
-        from "$buildDir/libs"
-        into "$buildDir/plugins/"
-    }
-    sourceSets.main.resources.srcDirs.each {
-        from "$buildDir/libs"
-        into "$buildDir/../../../$rootProject.ext.plugin.pluginTargetJarModule/build/libs/"
+        from "build/libs"
+        into "../$rootProject.ext.plugin.pluginTargetJarModule/build/libs/plugins"
     }
 }

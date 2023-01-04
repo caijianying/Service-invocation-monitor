@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
 public class PluginUtil {
     public static final Logger log = LogFactory.getLogger(PluginUtil.class);
 
-    public static List<AbstractClassEnhancePluginDefine> loadPlugin(){
+    public static List<AbstractClassEnhancePluginDefine> loadPlugin() {
         List<PluginDefine> pluginClassList = Lists.newLinkedList();
         List<AbstractClassEnhancePluginDefine> plugins = new ArrayList<>();
         try {
@@ -35,14 +35,15 @@ public class PluginUtil {
                 }
             }
             for (PluginDefine pluginDefine : pluginClassList) {
-                AbstractClassEnhancePluginDefine plugin = (AbstractClassEnhancePluginDefine) Class.forName(pluginDefine.getDefineClass(), true, AgentClassLoader
-                    .getDefault()).newInstance();
+                AbstractClassEnhancePluginDefine plugin = (AbstractClassEnhancePluginDefine)Class.forName(
+                    pluginDefine.getDefineClass(), true, AgentClassLoader
+                        .getDefault()).newInstance();
                 plugins.add(plugin);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("load plugin failure.");
         }
-
 
         return plugins;
     }
@@ -62,7 +63,6 @@ public class PluginUtil {
             return cfgUrlPaths;
         } catch (Exception e) {
             System.err.println("read resources failure.");
-            e.printStackTrace();
         }
         return null;
     }

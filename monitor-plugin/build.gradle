@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.8'
+version "$rootProject.ext.plugin.version"
 apply plugin: 'java'
 sourceCompatibility = 1.8
 jar.enabled = true
@@ -44,4 +44,9 @@ publishPlugin{
 
 runIde {
     jvmArgs '--add-exports', 'java.base/jdk.internal.vm=ALL-UNNAMED'
+}
+
+
+task packIdeaPlugin(type: Copy, dependsOn: build) {
+
 }

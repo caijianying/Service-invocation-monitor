@@ -6,6 +6,7 @@ package com.caijy.agent.core.trace;
  */
 public enum ComponentDefine {
     SPRING,
+    MVC,
     DUBBO;
 
     private String name;

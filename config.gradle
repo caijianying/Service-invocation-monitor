@@ -1,13 +1,15 @@
 ext {
     plugin = [
             agentTargetJarModule: "monitor-plugin",
-            pluginTargetJarModule: "monitor-agent"
+            pluginTargetJarModule: "monitor-agent",
+            version: "20230104.17"
     ]
 
     dependencies = [
             "guava"        : 'com.google.guava:guava:31.0.1-jre',
             "hutool-all"   : 'cn.hutool:hutool-all:5.8.5',
             "javax-servlet": 'javax.servlet:javax.servlet-api:4.0.1',
-            "apache-dubbo" : 'org.apache.dubbo:dubbo:2.7.0'
+            "apache-dubbo" : 'org.apache.dubbo:dubbo:2.7.0',
+            "spring-web": 'org.springframework:spring-web:5.2.4.RELEASE'
     ]
 }

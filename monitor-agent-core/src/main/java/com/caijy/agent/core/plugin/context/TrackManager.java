@@ -100,7 +100,8 @@ public class TrackManager {
                     builder.append("    ");
                     preText += "    ";
                 }
-                preText += String.format("|--- %s [", traceSegment.getMethodName());
+                preText += String.format("|--- 【%s】%s [", traceSegment.getComponentName(),
+                    traceSegment.getMethodName());
                 String midText = traceSegment.getCostTime();
                 String midColor = Long.parseLong(traceSegment.getCostTime()) > timeCostThreshold
                     ? AgentConstant.CONSOLE_COLOR_RED : AgentConstant.CONSOLE_COLOR_GREEN;
