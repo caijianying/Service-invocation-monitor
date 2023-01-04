@@ -12,11 +12,15 @@ repositories {
     mavenCentral()
 }
 
+
+// implementation ==> compile
+// compileOnly ==> provided
 dependencies {
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     implementation rootProject.ext.dependencies["javax-servlet"]
     implementation rootProject.ext.dependencies["hutool-all"]
     implementation rootProject.ext.dependencies["guava"]
+    compileOnly rootProject.ext.dependencies["apache-dubbo"]
     implementation project(":monitor-agent-core")
 }
 
@@ -30,19 +34,29 @@ tasks.withType(Javadoc) {
 }
 
 shadowJar {
+//    classifier = "sources"
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
-                'Premain-Class': 'com.caijy.agent.TraceAgent',
+                'Premain-Class': 'com.caijy.agent.TraceAgent2',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )
     }
 }
 
-task pack(type: Copy) {
+// 移动agent包到plugin包下
+task moveToPlugin(type: Copy) {
     sourceSets.main.resources.srcDirs.each {
         from tasks.shadowJar
+        into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
+    }
+}
+
+// 移动agent插件到plugin包下
+task packALLBuildDirLibs(type: Copy) {
+    sourceSets.main.resources.srcDirs.each {
+        from "$buildDir/libs"
         into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
     }
 }

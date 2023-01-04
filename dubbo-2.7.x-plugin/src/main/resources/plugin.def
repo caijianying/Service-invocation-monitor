@@ -1,0 +1,2 @@
+dubbo-2.7.x=com.caijy.agent.plugin.dubbo.AlibabaDubboInstrumentation
+dubbo-2.7.x=com.caijy.agent.plugin.dubbo.ApacheDubboInstrumentation

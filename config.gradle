@@ -1,12 +1,13 @@
-ext{
-    plugin=[
-        agentTargetJarModule : "monitor-plugin"
-
+ext {
+    plugin = [
+            agentTargetJarModule: "monitor-plugin",
+            pluginTargetJarModule: "monitor-agent"
     ]
 
-    dependencies =[
-        "guava":'com.google.guava:guava:31.0.1-jre',
-        "hutool-all":'cn.hutool:hutool-all:5.8.5',
-        "javax-servlet":'javax.servlet:javax.servlet-api:4.0.1'
+    dependencies = [
+            "guava"        : 'com.google.guava:guava:31.0.1-jre',
+            "hutool-all"   : 'cn.hutool:hutool-all:5.8.5',
+            "javax-servlet": 'javax.servlet:javax.servlet-api:4.0.1',
+            "apache-dubbo" : 'org.apache.dubbo:dubbo:2.7.0'
     ]
 }

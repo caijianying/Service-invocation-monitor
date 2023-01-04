@@ -6,7 +6,9 @@ package com.caijy.plugin.constants;
  */
 public interface PluginAgentConstant {
 
-     String AGENT_NAME="monitor-agent";
+     String AGENT_PREFIX="monitor-agent";
+
+     String AGENT_SUFFIX="all.jar";
 
      String PLUGIN_ID="com.caijy.plugin";
 

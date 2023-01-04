@@ -21,6 +21,11 @@ public interface AgentConstant {
     String MONITOR_PACKAGE = "monitor.package";
 
     /**
+     * LOG打印
+     **/
+    String MONITOR_LOG_LEVEL = "monitor.log.level";
+
+    /**
      * 判断高耗时的阀值，单位毫秒
      **/
     String MONITOR_TIME_COST_THRESHOLD = "monitor.timeCost.threshold";
@@ -43,4 +48,9 @@ public interface AgentConstant {
      * 输出到控制台的字体颜色
      **/
     String CONSOLE_COLOR_CYAN = "CYAN";
+
+    interface LogLevel {
+        String DEBUG = "DEBUG";
+        String INFO = "INFO";
+    }
 }

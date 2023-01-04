@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+group 'com.caijy.plugin'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    implementation rootProject.ext.dependencies["javax-servlet"]
+    implementation rootProject.ext.dependencies["hutool-all"]
+    implementation rootProject.ext.dependencies["guava"]
+    compileOnly rootProject.ext.dependencies["apache-dubbo"]
+    implementation project(":monitor-agent-core")
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+task packSpring5(type: Copy) {
+    sourceSets.main.resources.srcDirs.each {
+        from "$buildDir/libs"
+        into "$buildDir/../../plugins/"
+    }
+    sourceSets.main.resources.srcDirs.each {
+        from "$buildDir/libs"
+        into "$buildDir/../../$rootProject.ext.plugin.pluginTargetJarModule/build/libs/"
+    }
+}

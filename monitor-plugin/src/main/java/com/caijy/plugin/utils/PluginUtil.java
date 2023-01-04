@@ -42,7 +42,7 @@ public class PluginUtil {
      * @return String
      */
     public static String getAgentCoreJarPath() {
-        return getJarPathByStartWith(PluginAgentConstant.AGENT_NAME);
+        return getJarPath(PluginAgentConstant.AGENT_PREFIX, PluginAgentConstant.AGENT_SUFFIX);
     }
 
     /**
@@ -51,7 +51,7 @@ public class PluginUtil {
      * @param startWith 前缀名称
      * @return String
      */
-    private static String getJarPathByStartWith(String startWith) {
+    private static String getJarPath(String startWith, String suffix) {
         final String quotes = "\"";
         if (Objects.nonNull(IDEA_PLUGIN_DESCRIPTOR.getPath())) {
             //MessageUtil.info("agentLib:" + IDEA_PLUGIN_DESCRIPTOR.getPath());
@@ -61,7 +61,7 @@ public class PluginUtil {
         List<File> files = FileUtil.loopFiles(IDEA_PLUGIN_DESCRIPTOR.getPath());
         for (File file : files) {
             String name = file.getName();
-            if (name.startsWith(startWith)) {
+            if (name.startsWith(startWith) && name.endsWith(suffix)) {
                 String pathStr = FileUtil.getCanonicalPath(file);
                 if (StrUtil.contains(pathStr, StrUtil.SPACE)) {
                     return StrUtil.builder().append(quotes).append(pathStr).append(quotes).toString();

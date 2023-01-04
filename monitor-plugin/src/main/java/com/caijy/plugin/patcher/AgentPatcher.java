@@ -112,9 +112,9 @@ public class AgentPatcher extends JavaProgramPatcher {
             t -> t.indexOf(MONITOR_SAMPLE_RATE) != -1).findFirst().orElse(null);
         if (StringUtils.isBlank(sampleRate)) {
             sampleRate = ToolsSetting.getInstance().sampleRate;
-            if (StringUtils.isBlank(threshold)) {
+            if (StringUtils.isBlank(sampleRate)) {
                 sampleRate = String.valueOf(Commandinitializer.DEFAULT_VALUE_SAMPLE_RATE);
-                ToolsSetting.getInstance().sampleRate = threshold;
+                ToolsSetting.getInstance().sampleRate = sampleRate;
             }
         }else {
             String[] sampleRateCommand = sampleRate.split("=");
