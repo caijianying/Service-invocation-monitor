@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import com.caijy.plugin.utils.PluginUtil;
 import com.intellij.execution.filters.TextConsoleBuilder;
 import com.intellij.execution.filters.TextConsoleBuilderFactory;
@@ -26,20 +27,20 @@ public class MonitorOutputToolWindow implements ToolWindowFactory {
 
     public static ToolWindow toolWindow;
 
-    public static final String ID = "Monitor Console";
+    public static final String ID = "Monitor";
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         if (consoleViews.get(project) == null) {
             createToolWindow(project, toolWindow);
-            initLogFileReadTask(project);
+            //initLogFileReadTask(project);
         }
         MonitorOutputToolWindow.toolWindow = toolWindow;
         MonitorOutputToolWindow.toolWindow.activate(null, false);
     }
 
     private void initLogFileReadTask(Project project) {
-        schedule.scheduleAtFixedRate(()-> PluginUtil.refreshConsoleLog(project),0,1,TimeUnit.SECONDS);
+        schedule.scheduleAtFixedRate(() -> PluginUtil.refreshConsoleLog(project), 0, 1, TimeUnit.SECONDS);
     }
 
     // 为了方便其他地方使用 ConsoleView ，定义该方法获取 ConsoleView
@@ -58,7 +59,8 @@ public class MonitorOutputToolWindow implements ToolWindowFactory {
         TextConsoleBuilder builder = TextConsoleBuilderFactory.getInstance().createBuilder(project);
         ConsoleView consoleView = builder.getConsole();
         consoleViews.put(project, consoleView);
-        Content content = toolWindow.getContentManager().getFactory().createContent(consoleView.getComponent(), "Monitor Console Output", false);
+        Content content = toolWindow.getContentManager().getFactory().createContent(consoleView.getComponent(),
+            "Monitor Console Output", false);
         toolWindow.getContentManager().addContent(content);
         content.getComponent().setVisible(true);
         content.setCloseable(true);

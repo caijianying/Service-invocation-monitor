@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import com.caijy.agent.core.config.Config;
 import com.caijy.agent.core.console.TraceConsoleDTO;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.core.utils.FileCache;
@@ -83,6 +84,8 @@ public class PluginUtil {
     public static void refreshConsoleLog(Project project) {
         String projectName = project.getName();
         String logFilePath = FileCache.getLogFilePath(getAgentCoreJarPath(), projectName);
+        MessageUtil.info(
+            String.format("refreshConsoleLog >>> projectName=%s,logFilePath=%s ", projectName, logFilePath));
         if (logFilePath == null || !new File(logFilePath).exists()) {
             return;
         }
@@ -95,6 +98,11 @@ public class PluginUtil {
             printConsole(consoleView, JSON.parseObject(list.get(i), TraceConsoleDTO.class));
         }
         lastLogIndexCache.put(project.getName(), size - 1);
+    }
+
+    public static void showAllConsoleLog(Project project) {
+        lastLogIndexCache.put(project.getName(), -1);
+        refreshConsoleLog(project);
     }
 
     /**

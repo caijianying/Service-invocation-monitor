@@ -34,11 +34,10 @@ tasks.withType(Javadoc) {
 }
 
 shadowJar {
-//    classifier = "sources"
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
-                'Premain-Class': 'com.caijy.agent.TraceAgent2',
+                'Premain-Class': 'com.caijy.agent.TraceAgent',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )

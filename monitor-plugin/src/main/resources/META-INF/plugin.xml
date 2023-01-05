@@ -124,4 +124,18 @@
         <toolWindow factoryClass="com.caijy.plugin.ui.MonitorOutputToolWindow"
                     id="Monitor" anchor="bottom"/>
     </extensions>
+
+    <actions>
+        <action class="com.caijy.plugin.action.MonitorOutPutWindowAction" description="Show all trace log" text="Show all trace log">
+            <!-- 添加到鼠标右键菜单中 -->
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+        </action>
+
+    </actions>
+
+    <!--suppress PluginXmlValidity -->
+    <projectListeners>
+        <listener class="com.caijy.plugin.listener.MonitorOutPutToolWindowListener"
+                  topic="com.intellij.openapi.wm.ex.ToolWindowManagerListener"/>
+    </projectListeners>
 </idea-plugin>

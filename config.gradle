@@ -1,8 +1,16 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getCurrentVersion(){
+    DateFormat df = new SimpleDateFormat("yyyyMMdd.hh")
+    return df.format(Calendar.getInstance(Locale.CHINA).getTime())
+}
+
 ext {
     plugin = [
             agentTargetJarModule: "monitor-plugin",
             pluginTargetJarModule: "monitor-agent",
-            version: "20230104.17"
+            version: getCurrentVersion()
     ]
 
     dependencies = [

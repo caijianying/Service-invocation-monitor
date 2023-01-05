@@ -41,7 +41,6 @@ public class InstrumentInterceptor {
         if (interceptor.isInvalid(obj, clazz, method, allArguments, method.getParameterTypes())){
             return callable.call();
         }
-        System.err.println("InstrumentInterceptor >>> " + clazz.getName() + "." + method.getName());
         MethodInvocationContext context = new MethodInvocationContext();
         try {
             interceptor.beforeMethod(obj, clazz, method, allArguments, method.getParameterTypes(), context);

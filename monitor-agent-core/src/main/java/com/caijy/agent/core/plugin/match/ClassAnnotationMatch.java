@@ -57,13 +57,8 @@ public class ClassAnnotationMatch implements IndirectMatch {
         List<String> annotationList = new ArrayList<String>(Arrays.asList(annotations));
         AnnotationList declaredAnnotations = typeDescription.getDeclaredAnnotations();
         for (AnnotationDescription annotation : declaredAnnotations) {
-            System.err.println(
-                String.format("ClassAnnotationMatch >>> typeDescription=%s,annotationList=%s,declaredAnnotation=%s",
-                    typeDescription, annotationList,
-                    annotation.getAnnotationType().getActualName()));
             annotationList.remove(annotation.getAnnotationType().getActualName());
         }
-        //return annotationList.size() != annotations.length;
         return annotationList.isEmpty();
     }
 }
