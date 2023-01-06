@@ -122,11 +122,12 @@
         <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting"/>
 
         <toolWindow factoryClass="com.caijy.plugin.ui.MonitorOutputToolWindow"
-                    id="Monitor" anchor="bottom"/>
+                    id="Monitor" icon="/icons/Monitor.svg" anchor="bottom"/>
     </extensions>
 
     <actions>
-        <action class="com.caijy.plugin.action.MonitorOutPutWindowAction" description="Show all trace log" text="Show all trace log">
+        <action class="com.caijy.plugin.action.MonitorOutPutWindowAction" icon="/icons/Monitor.svg"
+                description="Show all trace log" text="Show all trace log">
             <!-- 添加到鼠标右键菜单中 -->
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
         </action>

@@ -106,7 +106,8 @@ public class TrackManager {
                 String midColor = Long.parseLong(traceSegment.getCostTime()) > timeCostThreshold
                     ? AgentConstant.CONSOLE_COLOR_RED : AgentConstant.CONSOLE_COLOR_GREEN;
                 String tailText = "] ms\n";
-                String format = String.format("|--- %s [%s] ms\n", traceSegment.getMethodName(),
+                String format = String.format("|--- 【%s】%s [%s] ms\n", traceSegment.getComponentName(),
+                    traceSegment.getMethodName(),
                     ConfigBanner
                         .toColorString(
                             Long.parseLong(traceSegment.getCostTime()) > timeCostThreshold ? ConsoleColorEnum.RED
