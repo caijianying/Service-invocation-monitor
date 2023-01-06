@@ -33,14 +33,9 @@ public class MonitorOutputToolWindow implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         if (consoleViews.get(project) == null) {
             createToolWindow(project, toolWindow);
-            //initLogFileReadTask(project);
         }
         MonitorOutputToolWindow.toolWindow = toolWindow;
         MonitorOutputToolWindow.toolWindow.activate(null, false);
-    }
-
-    private void initLogFileReadTask(Project project) {
-        schedule.scheduleAtFixedRate(() -> PluginUtil.refreshConsoleLog(project), 0, 1, TimeUnit.SECONDS);
     }
 
     // 为了方便其他地方使用 ConsoleView ，定义该方法获取 ConsoleView

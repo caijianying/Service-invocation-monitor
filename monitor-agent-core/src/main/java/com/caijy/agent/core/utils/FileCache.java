@@ -1,6 +1,9 @@
 package com.caijy.agent.core.utils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +20,13 @@ import com.caijy.agent.core.console.TraceConsoleDTO;
 public class FileCache {
     /**
      * 往日志文件追加trace日志
-     * @author liguang
-     * @date 2022/12/15 3:38 下午
+     *
      * @param agentJarPath:
      * @param projectCode:
      * @param consoleDTOList:
      * @return
+     * @author liguang
+     * @date 2022/12/15 3:38 下午
      **/
     public static void appendLines(String agentJarPath, String projectCode, List<TraceConsoleDTO> consoleDTOList) {
         String logFilePath = getLogFilePath(agentJarPath, projectCode);
@@ -34,9 +38,9 @@ public class FileCache {
     }
 
     public static String getLogFilePath(String agentJarPath, String projectCode) {
-        File file = new File(agentJarPath);
-        if (file.exists()) {
-            String projectDir = file.getParentFile().getParentFile().getAbsolutePath();
+        File agentJar = new File(agentJarPath);
+        if (agentJar.exists()) {
+            String projectDir = agentJar.getParentFile().getParentFile().getAbsolutePath();
             return String.format("%s/logs/%s.log", projectDir, projectCode);
         }
         return null;

@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.caijy.agent.core.config.Config;
 import com.caijy.agent.core.console.TraceConsoleDTO;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.core.utils.FileCache;
@@ -45,6 +44,36 @@ public class PluginUtil {
     public static String getAgentCoreJarPath() {
         return getJarPath(PluginAgentConstant.AGENT_PREFIX, PluginAgentConstant.AGENT_SUFFIX);
     }
+
+    public static String getAgentCoreJarPath2() {
+        return getJarPath2(PluginAgentConstant.AGENT_PREFIX, PluginAgentConstant.AGENT_SUFFIX);
+    }
+
+    /**
+     * 不处理含空格
+     * @author liguang
+     * @date 2023/1/6 11:00 上午
+     * @param startWith:
+     * @param suffix:
+     * @return
+     **/
+    private static String getJarPath2(String startWith, String suffix) {
+        if (Objects.nonNull(IDEA_PLUGIN_DESCRIPTOR.getPath())) {
+            //MessageUtil.info("agentLib:" + IDEA_PLUGIN_DESCRIPTOR.getPath());
+        } else {
+            MessageUtil.warn("agentLib not exist!");
+        }
+        List<File> files = FileUtil.loopFiles(IDEA_PLUGIN_DESCRIPTOR.getPath());
+        for (File file : files) {
+            String name = file.getName();
+            if (name.startsWith(startWith) && name.endsWith(suffix)) {
+                String pathStr = FileUtil.getCanonicalPath(file);
+                return pathStr;
+            }
+        }
+        return StrUtil.EMPTY;
+    }
+
 
     /**
      * 根据jar包的前缀名称获路径
@@ -83,9 +112,8 @@ public class PluginUtil {
      **/
     public static void refreshConsoleLog(Project project) {
         String projectName = project.getName();
-        String logFilePath = FileCache.getLogFilePath(getAgentCoreJarPath(), projectName);
-        MessageUtil.info(
-            String.format("refreshConsoleLog >>> projectName=%s,logFilePath=%s ", projectName, logFilePath));
+        String agentJarPath = getAgentCoreJarPath2();
+        String logFilePath = FileCache.getLogFilePath(agentJarPath, projectName);
         if (logFilePath == null || !new File(logFilePath).exists()) {
             return;
         }

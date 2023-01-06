@@ -40,9 +40,6 @@ public class MonitorOutPutToolWindowListener implements ToolWindowManagerListene
 
     @Override
     public void stateChanged(@NotNull ToolWindowManager toolWindowManager) {
-        System.out.println(String
-            .format("stateChanged,ActiveToolWindowId:%s,ToolWindowIds:%s", toolWindowManager.getActiveToolWindowId(),
-                toolWindowManager.getToolWindowIds()));
         if (MonitorOutputToolWindow.ID.equals(toolWindowManager.getActiveToolWindowId())) {
             PluginUtil.refreshConsoleLog(project);
         }
