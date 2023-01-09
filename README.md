@@ -11,7 +11,8 @@
 * 下载完插件后，重启Idea。像平常一样，项目启动即可。
 * 也可以直接通过我的Demo项目快速上手 https://github.com/caijianying/Service-invocation-monitor-demo
 * 看效果
- ![image](https://user-images.githubusercontent.com/25894814/192182495-b2962d10-a719-4e36-b153-d3c867417028.png)
+ ![image](https://user-images.githubusercontent.com/25894814/211231932-563ad434-b436-4601-88ca-ed9848b92de4.png)
+)
 
 ## 启动参数配置
 |  启动命令   |  是否必填  |参数说明  | 默认值  |
