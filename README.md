@@ -1,5 +1,5 @@
 # Service Invocation Monitor
-* 还在使用StopWatch在代码里到处埋点？这是一款轻量级的0侵入式链路监控的Idea插件，可以监控Junit、SpringBoot应用的调用链，统计接口方法耗时等，后续还会支持其他性能指标。
+* 这是一款基于Skywalking的，轻量级的0侵入式链路监控的Idea插件，可以监控Junit、SpringBoot应用的调用链，统计接口方法耗时等。
 * 平时开发中可能会很少关注到代码的性能，希望在平时的开发中，能帮助大家关注代码的性能，提升代码质量。
 ## 有了它，你可以
 * 查看接口方法调用的耗时，支持MVC、Spring、Dubbo等链路采集
