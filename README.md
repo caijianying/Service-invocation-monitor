@@ -4,7 +4,7 @@
 ## 有了它，你可以
 * 查看接口方法调用的耗时，支持MVC、Spring、Dubbo等链路采集
 * 高耗时链路高亮显示
-* 支持配置启动命令，详见 [启动参数配置](https://github.com/caijianying/Service-invocation-monitor/edit/main/README.md#%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE)
+* 支持配置启动命令，详见 [启动参数配置](https://github.com/caijianying/Service-invocation-monitor/blob/main/README.md#%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE)
 
 
 ## 快速开始
