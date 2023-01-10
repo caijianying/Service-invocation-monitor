@@ -1,13 +1,11 @@
 package com.caijy.agent.core.config;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
 
 import cn.hutool.core.util.StrUtil;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.core.constants.AgentConstant.LogLevel;
-import com.google.common.collect.Maps;
 
 /**
  * @author liguang
@@ -15,7 +13,7 @@ import com.google.common.collect.Maps;
  */
 public class Config {
 
-    private static final Map<String, Object> configMap = Maps.newHashMap();
+    private static final Map<String, Object> configMap = new HashMap<>();
 
     static {
         configMap.put(AgentConstant.MONITOR_AGENT_PATH, System.getProperty(AgentConstant.MONITOR_AGENT_PATH));

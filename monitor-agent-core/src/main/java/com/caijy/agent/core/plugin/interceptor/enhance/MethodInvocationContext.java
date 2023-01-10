@@ -11,11 +11,13 @@ import com.caijy.agent.core.plugin.context.TrackContext;
 import com.caijy.agent.core.plugin.context.TrackManager;
 import com.caijy.agent.core.trace.ComponentDefine;
 import com.caijy.agent.core.utils.TraceSegmentBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liguang
  * @date 2022/12/16 星期五 4:54 下午
  */
+@Slf4j
 public class MethodInvocationContext {
 
     private boolean isContinue = true;
@@ -48,10 +50,8 @@ public class MethodInvocationContext {
                 .methodName(methodName).componentName(component.name()).depth(depth).build());
             startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         } catch (Throwable e) {
-            e.printStackTrace();
-            System.out.println(String
-                .format("%s.beforeMethod | ERROR: before method invoke An Error occurred! reason: %s", interceptorName,
-                    e.getMessage()));
+            log.error("{}.beforeMethod | before method invoke An Error occurred! reason:{},method:{}", interceptorName,
+                e.getMessage(),methodName);
         } finally {
             RuntimeContext runtimeContext = new RuntimeContext();
             runtimeContext.set("startMilli", startMilli);
@@ -79,11 +79,8 @@ public class MethodInvocationContext {
                 stopMilli - Long.valueOf(RUNTIME_CONTEXT.get().get("startMilli").toString())).build());
             TrackManager.getExitSpan();
         } catch (Throwable e) {
-            e.printStackTrace();
-            System.out.println(String
-                .format("%s.afterMethod | ERROR: after method invoke An Error occurred! reason: %s,method:%s",
-                    interceptorName,
-                    e.getMessage(), methodName));
+            log.error("{}.afterMethod | before method invoke An Error occurred! reason:{},method:{}", interceptorName,
+                e.getMessage(),methodName);
         } finally {
             clear();
         }

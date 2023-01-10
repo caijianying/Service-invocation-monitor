@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.alibaba.fastjson.JSON;
-
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.caijy.agent.core.console.TraceConsoleDTO;
 import com.caijy.agent.core.constants.AgentConstant;
 import com.caijy.agent.core.utils.FileCache;
@@ -51,11 +50,12 @@ public class PluginUtil {
 
     /**
      * 不处理含空格
-     * @author liguang
-     * @date 2023/1/6 11:00 上午
+     *
      * @param startWith:
      * @param suffix:
      * @return
+     * @author liguang
+     * @date 2023/1/6 11:00 上午
      **/
     private static String getJarPath2(String startWith, String suffix) {
         if (Objects.nonNull(IDEA_PLUGIN_DESCRIPTOR.getPath())) {
@@ -73,7 +73,6 @@ public class PluginUtil {
         }
         return StrUtil.EMPTY;
     }
-
 
     /**
      * 根据jar包的前缀名称获路径
@@ -123,7 +122,7 @@ public class PluginUtil {
         lastIndex = lastIndex == null ? -1 : lastIndex;
         int size = list.size();
         for (int i = lastIndex + 1; i < size; i++) {
-            printConsole(consoleView, JSON.parseObject(list.get(i), TraceConsoleDTO.class));
+            printConsole(consoleView, JSONUtil.toBean(list.get(i), TraceConsoleDTO.class));
         }
         lastLogIndexCache.put(project.getName(), size - 1);
     }

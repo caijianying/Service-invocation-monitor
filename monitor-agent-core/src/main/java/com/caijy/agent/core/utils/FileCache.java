@@ -1,16 +1,12 @@
 package com.caijy.agent.core.utils;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.alibaba.fastjson.JSON;
-
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONUtil;
 import com.caijy.agent.core.console.TraceConsoleDTO;
 
 /**
@@ -33,7 +29,7 @@ public class FileCache {
         if (logFilePath == null) {
             return;
         }
-        List<String> list = consoleDTOList.stream().map(JSON::toJSONString).collect(Collectors.toList());
+        List<String> list = consoleDTOList.stream().map(JSONUtil::toJsonStr).collect(Collectors.toList());
         FileUtil.appendLines(list, logFilePath, StandardCharsets.UTF_8);
     }
 

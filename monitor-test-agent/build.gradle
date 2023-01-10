@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version "$rootProject.ext.plugin.version"
+version 1.0
 sourceCompatibility = 1.8
 
 
@@ -16,6 +16,8 @@ repositories {
 // implementation ==> compile
 // compileOnly ==> provided
 dependencies {
+    implementation rootProject.ext.dependencies["hutool-all"]
+    implementation rootProject.ext.dependencies["slf4j"]
     implementation project(":monitor-agent-core")
 }
 
@@ -32,18 +34,10 @@ shadowJar {
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
-                'Premain-Class': 'com.caijy.agent.TraceAgent',
+                'Premain-Class': 'com.caijy.test.agent.TestTraceAgent',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )
-    }
-}
-
-// 移动agent包到plugin包下
-task packAgent(type: Copy, dependsOn: shadowJar) {
-    sourceSets.main.resources.srcDirs.each {
-        from "$buildDir/libs"
-        into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
     }
 }
 

@@ -12,8 +12,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.8.5'
+    implementation rootProject.ext.dependencies["guava"]
+    implementation rootProject.ext.dependencies["byte-buddy"]
+    implementation rootProject.ext.dependencies["byte-buddy-agent"]
+    annotationProcessor rootProject.ext.dependencies["lombok"]
+    compileOnly rootProject.ext.dependencies["lombok"]
+    testAnnotationProcessor rootProject.ext.dependencies["lombok"]
+    testCompileOnly rootProject.ext.dependencies["lombok"]
 }
 
 

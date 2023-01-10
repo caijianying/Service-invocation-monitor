@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.hutool.core.collection.CollectionUtil;
@@ -15,7 +16,6 @@ import com.caijy.agent.core.log.Logger;
 import com.caijy.agent.core.plugin.AbstractClassEnhancePluginDefine;
 import com.caijy.agent.core.plugin.PluginDefine;
 import com.caijy.agent.core.plugin.loader.AgentClassLoader;
-import com.google.common.collect.Lists;
 
 /**
  * @author liguang
@@ -25,7 +25,7 @@ public class PluginUtil {
     public static final Logger log = LogFactory.getLogger(PluginUtil.class);
 
     public static List<AbstractClassEnhancePluginDefine> loadPlugin() {
-        List<PluginDefine> pluginClassList = Lists.newLinkedList();
+        List<PluginDefine> pluginClassList = new LinkedList<>();
         List<AbstractClassEnhancePluginDefine> plugins = new ArrayList<>();
         try {
             List<URL> resources = getResources();
