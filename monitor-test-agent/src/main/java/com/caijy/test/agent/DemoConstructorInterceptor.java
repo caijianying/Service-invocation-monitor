@@ -15,20 +15,12 @@ import org.slf4j.LoggerFactory;
  * @author liguang
  * @date 2023/1/10 星期二 2:13 下午
  */
-public class LogInterceptor {
-
-    public static void log(String name) {
-        LoggerFactory.getLogger(name).info(name + ">>>:XXX!");
-    }
-
+public class DemoConstructorInterceptor {
 
     @RuntimeType
-    public Object intercept(@This Object obj, @Origin Class<?> clazz, @AllArguments Object[] allArguments,
-        @Origin Method method,
-        @SuperCall Callable<?> callable) throws Throwable {
+    public void intercept(@This Object obj, @AllArguments Object[] allArguments) {
 
+        System.out.println("DemoConstructorInterceptor >>> " + obj);
 
-
-        return callable.call();
     }
 }

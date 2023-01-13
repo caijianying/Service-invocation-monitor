@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import com.caijy.agent.core.log.LogFactory;
 import com.caijy.agent.core.log.Logger;
+import com.caijy.agent.core.plugin.context.TrackManager;
 import com.caijy.agent.core.plugin.interceptor.enhance.MethodAroundInterceptor;
 import com.caijy.agent.core.plugin.interceptor.enhance.MethodInvocationContext;
 import com.caijy.agent.core.trace.ComponentDefine;
@@ -22,13 +23,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 public class MvcAnnotationInterceptor implements MethodAroundInterceptor {
 
-    public static final Logger LOGGER = LogFactory.getLogger(MvcAnnotationInterceptor.class);
+    private static final String ROOT_LINK_TAG = "ROOT_LINK";
 
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments,
         Class<?>[] argumentsTypes,
-        MethodInvocationContext context) throws Throwable {
-        String url = this.getControllerURL(clazz, method);
+        MethodInvocationContext context) {
+        String url = "";
+        boolean rootLink = this.isRootLink();
+        if (rootLink) {
+            url = this.getControllerURL(clazz, method);
+        }
+        context.getRuntimeContext().set(ROOT_LINK_TAG,rootLink);
         if (StringUtils.isEmpty(url)) {
             url = clazz.getName() + "." + method.getName();
             context.start(this.getClass().getSimpleName(), ComponentDefine.SPRING, url);
@@ -37,10 +43,18 @@ public class MvcAnnotationInterceptor implements MethodAroundInterceptor {
         context.start(this.getClass().getSimpleName(), ComponentDefine.MVC, url);
     }
 
+    private boolean isRootLink() {
+        String traceId = TrackManager.getCurrentSpan();
+        return traceId == null;
+    }
+
     @Override
     public void afterMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
-        MethodInvocationContext context) throws Throwable {
-        String url = this.getControllerURL(clazz, method);
+        MethodInvocationContext context) {
+        String url = "";
+        if ((Boolean)context.getRuntimeContext().get(ROOT_LINK_TAG)) {
+            url = this.getControllerURL(clazz, method);
+        }
         if (StringUtils.isEmpty(url)) {
             url = clazz.getName() + "." + method.getName();
             context.stop(this.getClass().getSimpleName(), ComponentDefine.SPRING, url);

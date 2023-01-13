@@ -24,6 +24,10 @@ subprojects {
         implementation rootProject.ext.dependencies["byte-buddy"]
         implementation rootProject.ext.dependencies["byte-buddy-agent"]
         implementation rootProject.ext.dependencies["slf4j"]
+        annotationProcessor rootProject.ext.dependencies["lombok"]
+        compileOnly rootProject.ext.dependencies["lombok"]
+        testAnnotationProcessor rootProject.ext.dependencies["lombok"]
+        testCompileOnly rootProject.ext.dependencies["lombok"]
         // 单测
         testCompileOnly 'junit:junit:4.12'
     }

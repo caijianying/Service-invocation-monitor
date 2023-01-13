@@ -57,7 +57,6 @@ public class PluginFinder {
             }
         };
 
-
         judge = judge.and(not(isInterface()));
         for (AbstractClassEnhancePluginDefine define : signatureMatchDefine) {
             ClassMatch match = define.enhanceClass();

@@ -18,7 +18,7 @@ public class Config {
     static {
         configMap.put(AgentConstant.MONITOR_AGENT_PATH, System.getProperty(AgentConstant.MONITOR_AGENT_PATH));
         configMap.put(AgentConstant.MONITOR_LOG_LEVEL,
-            System.getProperty(AgentConstant.MONITOR_AGENT_PATH, LogLevel.INFO));
+            System.getProperty(AgentConstant.MONITOR_LOG_LEVEL, LogLevel.INFO));
     }
 
     public static Object get(String configName) {

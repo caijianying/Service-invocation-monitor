@@ -15,10 +15,6 @@ dependencies {
     implementation rootProject.ext.dependencies["guava"]
     implementation rootProject.ext.dependencies["byte-buddy"]
     implementation rootProject.ext.dependencies["byte-buddy-agent"]
-    annotationProcessor rootProject.ext.dependencies["lombok"]
-    compileOnly rootProject.ext.dependencies["lombok"]
-    testAnnotationProcessor rootProject.ext.dependencies["lombok"]
-    testCompileOnly rootProject.ext.dependencies["lombok"]
 }
 
 

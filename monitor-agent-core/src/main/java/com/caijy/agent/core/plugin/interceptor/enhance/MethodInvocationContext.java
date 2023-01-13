@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MethodInvocationContext {
 
+    private static final String START_MILLI = "startMilli";
+
     private boolean isContinue = true;
 
     private static final ThreadLocal<AtomicInteger> DEPTH_CONTEXT = new ThreadLocal<>();
@@ -34,7 +36,7 @@ public class MethodInvocationContext {
         this.isContinue = isContinue;
     }
 
-    public void start(String interceptorName, ComponentDefine component, String methodName) {
+    public void start(String interceptorName, ComponentDefine component, String fullMethodName) {
         String traceId = TrackManager.getCurrentSpan();
         if (null == traceId) {
             traceId = UUID.randomUUID().toString();
@@ -47,15 +49,13 @@ public class MethodInvocationContext {
             depth = increase();
             TrackManager.createEntrySpan();
             TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(1)
-                .methodName(methodName).componentName(component.name()).depth(depth).build());
+                .methodName(fullMethodName).componentName(component.name()).depth(depth).build());
             startMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         } catch (Throwable e) {
             log.error("{}.beforeMethod | before method invoke An Error occurred! reason:{},method:{}", interceptorName,
-                e.getMessage(),methodName);
+                e.getMessage(), fullMethodName, e);
         } finally {
-            RuntimeContext runtimeContext = new RuntimeContext();
-            runtimeContext.set("startMilli", startMilli);
-            RUNTIME_CONTEXT.set(runtimeContext);
+            getRuntimeContext().set(START_MILLI, startMilli);
         }
     }
 
@@ -69,18 +69,18 @@ public class MethodInvocationContext {
         return result;
     }
 
-    public void stop(String interceptorName, ComponentDefine component, String methodName) {
+    public void stop(String interceptorName, ComponentDefine component, String fullMethodName) {
         try {
             long stopMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
             // 方法退出即减一 保证depth的准确性
             decrease();
-            TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(0).methodName(methodName).componentName(
+            TraceSegmentBuilder.add(TraceSegmentModel.builder().processFlag(0).methodName(fullMethodName).componentName(
                 component.name()).costTimeStamp(
-                stopMilli - Long.valueOf(RUNTIME_CONTEXT.get().get("startMilli").toString())).build());
+                stopMilli - Long.valueOf(getRuntimeContext().get(START_MILLI).toString())).build());
             TrackManager.getExitSpan();
         } catch (Throwable e) {
-            log.error("{}.afterMethod | before method invoke An Error occurred! reason:{},method:{}", interceptorName,
-                e.getMessage(),methodName);
+            log.error("{}.afterMethod | after method invoke An Error occurred! reason:{},method:{}", interceptorName,
+                e.getMessage(), fullMethodName, e);
         } finally {
             clear();
         }
@@ -99,5 +99,14 @@ public class MethodInvocationContext {
     public void clear() {
         DEPTH_CONTEXT.remove();
         RUNTIME_CONTEXT.remove();
+    }
+
+    public RuntimeContext getRuntimeContext() {
+        RuntimeContext runtimeContext = RUNTIME_CONTEXT.get();
+        if (runtimeContext == null) {
+            runtimeContext = new RuntimeContext(RUNTIME_CONTEXT);
+            RUNTIME_CONTEXT.set(runtimeContext);
+        }
+        return runtimeContext;
     }
 }
