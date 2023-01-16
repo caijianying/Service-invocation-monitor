@@ -1,5 +1,6 @@
 package com.caijy.agent.tools.interceptor;
 
+import com.caijy.agent.core.plugin.interceptor.enhance.Enhancer;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
@@ -12,8 +13,11 @@ public class ThreadConstructorInterceptor {
 
     @RuntimeType
     public void intercept(@This Object obj, @AllArguments Object[] allArguments) {
-
-        System.out.println("ThreadConstructorInterceptor >>> " + obj);
+        Enhancer enhancer = (Enhancer)obj;
+        enhancer.setDynamicField(Thread.currentThread());
+        System.out.println(
+            "ThreadConstructorInterceptor >>> " + obj + ",threadId:" + Thread.currentThread().getId() + ",threadName:"
+                + Thread.currentThread().getName());
 
     }
 }

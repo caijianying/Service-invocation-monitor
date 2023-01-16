@@ -13,6 +13,8 @@ public class ThreadSpan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Thread parent;
+
     private Long threadId;
 
     private String threadName;
@@ -33,6 +35,11 @@ public class ThreadSpan implements Serializable {
 
     private ThreadSpan methodName(String methodName) {
         this.methodName = methodName;
+        return this;
+    }
+
+    public ThreadSpan parent(Thread parent) {
+        this.parent = parent;
         return this;
     }
 
