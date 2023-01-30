@@ -119,10 +119,10 @@ public class ConfigBanner {
 
     public static void printBanner() {
         String envInfo = getConfigRuntimeInfo();
-        String bannerStr = toColorString(ConsoleColor.BRIGHT_MAGENTA, configBanner, ConsoleColor.GREEN, envInfo,
-            ConsoleColor.FAINT);
+        String bannerStr = toColorString(ConsoleColor.BRIGHT_MAGENTA, configBanner, ConsoleColor.DEFAULT, envInfo);
         System.out.println(bannerStr);
     }
+
 
 
     public static String getConfigRuntimeInfo() {

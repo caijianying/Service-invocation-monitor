@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.2'
+version "$rootProject.ext.plugin.version"
 sourceCompatibility = 1.8
 
 
@@ -12,10 +12,10 @@ repositories {
     mavenCentral()
 }
 
+
+// implementation ==> compile
+// compileOnly ==> provided
 dependencies {
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation 'com.google.guava:guava:31.0.1-jre'
     implementation project(":monitor-agent-core")
 }
 
@@ -36,6 +36,14 @@ shadowJar {
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )
+    }
+}
+
+// 移动agent包到plugin包下
+task packAgent(type: Copy, dependsOn: shadowJar) {
+    sourceSets.main.resources.srcDirs.each {
+        from "$buildDir/libs"
+        into "$buildDir/../../$rootProject.ext.plugin.agentTargetJarModule/build/idea-sandbox/plugins/$rootProject.ext.plugin.agentTargetJarModule/lib"
     }
 }
 

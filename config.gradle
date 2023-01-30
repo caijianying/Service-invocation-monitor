@@ -1,0 +1,30 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getCurrentVersion() {
+    DateFormat df = new SimpleDateFormat("yyyyMMdd")
+    return df.format(Calendar.getInstance(Locale.CHINA).getTime())
+}
+
+ext {
+    plugin = [
+            agentTargetJarModule : "monitor-plugin",
+            pluginTargetJarModule: "monitor-agent",
+            version              : getCurrentVersion()
+    ]
+
+    dependencies = [
+            "guava"          : 'com.google.guava:guava:31.0.1-jre',
+            "hutool-all"     : 'cn.hutool:hutool-all:5.8.5',
+            "javax-servlet"  : 'javax.servlet:javax.servlet-api:4.0.1',
+            "apache-dubbo"   : 'org.apache.dubbo:dubbo:2.7.0',
+            "spring-web"     : 'org.springframework:spring-web:5.2.4.RELEASE',
+            "slf4j"          : 'org.slf4j:slf4j-api:1.7.36',
+            "lombok"         : 'org.projectlombok:lombok:1.18.2',
+            "fastjson"       : 'com.alibaba:fastjson:1.2.79',
+            "javassist"      : 'javassist:javassist:3.12.1.GA',
+            "byte-buddy"      : 'net.bytebuddy:byte-buddy:1.12.6',
+            "byte-buddy-agent": 'net.bytebuddy:byte-buddy-agent:1.12.6',
+            "junit"          : 'junit:junit:4.12'
+    ]
+}

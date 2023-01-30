@@ -13,6 +13,20 @@
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
+    <h3>V20220106</h3>
+    <ul>
+        <li>Support MVC, Spring, Dubbo link tracing</li>
+        <li>You can view trace links in an independent window</li>
+        <li>Parameter configuration of idea plugin is supported：Preferences -> tools -> Service Invocation Monitor</li>
+    </ul>
+
+    <h3>V20220106</h3>
+    <ul>
+        <li>支持MVC、Spring、Dubbo链路追踪</li>
+        <li>支持通过独立窗口，查看trace链路</li>
+        <li>支持idea插件参数配置：Preferences -> tools -> Service Invocation Monitor</li>
+    </ul>
+
     <h3>V1.0.6</h3>
     <ul>
         <li>Added Idea configuration entry for time-consuming options：Preferences -> tools -> Service Invocation Monitor</li>
@@ -119,13 +133,24 @@
                                  id="com.caijy.plugin.config.ToolsConfiguration"
                                  displayName="Service Invocation Monitor"/>
         <!--数据持久化扩展点-->
-        <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting" />
+        <applicationService serviceImplementation="com.caijy.plugin.config.ToolsSetting"/>
 
-<!--        <toolWindow factoryClass="com.caijy.plugin.config.TranslatorToolsWindow"-->
-<!--                    id="com.caijy.plugin.config.TranslatorToolsWindow" anchor="right"/>-->
+        <toolWindow factoryClass="com.caijy.plugin.ui.MonitorOutputToolWindow"
+                    id="Monitor" icon="/icons/Monitor.svg" anchor="bottom"/>
     </extensions>
 
     <actions>
+        <action class="com.caijy.plugin.action.MonitorOutPutWindowAction" icon="/icons/Monitor.svg"
+                description="Show all trace log" text="Show all trace log">
+            <!-- 添加到鼠标右键菜单中 -->
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+        </action>
 
     </actions>
+
+    <!--suppress PluginXmlValidity -->
+    <projectListeners>
+        <listener class="com.caijy.plugin.listener.MonitorOutPutToolWindowListener"
+                  topic="com.intellij.openapi.wm.ex.ToolWindowManagerListener"/>
+    </projectListeners>
 </idea-plugin>

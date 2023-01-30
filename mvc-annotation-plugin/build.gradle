@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'com.caijy.plugin'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly rootProject.ext.dependencies["spring-web"]
+    implementation project(":monitor-agent-core")
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+task packPlugin(type: Copy, dependsOn: build) {
+    sourceSets.main.resources.srcDirs.each {
+        from "build/libs"
+        into "../$rootProject.ext.plugin.pluginTargetJarModule/build/libs/plugins"
+    }
+}

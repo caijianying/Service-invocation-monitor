@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.7'
+version "$rootProject.ext.plugin.version"
 apply plugin: 'java'
 sourceCompatibility = 1.8
 jar.enabled = true
@@ -14,7 +14,6 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', includes: ['*jar'])
     implementation project(":monitor-agent-core")
 }
 
@@ -24,6 +23,11 @@ intellij {
     plugins = ['java']
     type.set("IU")
     localPath.set("/Applications/IntelliJ IDEA.app")
+    tasks {
+        "buildSearchableOptions" {
+            enabled = false
+        }
+    }
 }
 
 patchPluginXml {
@@ -39,4 +43,9 @@ publishPlugin{
 
 runIde {
     jvmArgs '--add-exports', 'java.base/jdk.internal.vm=ALL-UNNAMED'
+}
+
+
+task packIdeaPlugin(type: Copy, dependsOn: build) {
+
 }

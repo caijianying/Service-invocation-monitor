@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+group 'com.caijy.plugin'
+version 1.0
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+
+// implementation ==> compile
+// compileOnly ==> provided
+dependencies {
+    implementation rootProject.ext.dependencies["hutool-all"]
+    implementation rootProject.ext.dependencies["slf4j"]
+    implementation project(":monitor-agent-core")
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+shadowJar {
+    manifest {
+        attributes(
+                'Manifest-Version': '1.0',
+                'Premain-Class': 'com.caijy.test.agent.TestTraceAgent',
+                'Can-Redefine-Classes': true,
+                'Can-Retransform-Classes': true
+        )
+    }
+}
+

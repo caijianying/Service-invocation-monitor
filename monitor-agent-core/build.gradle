@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version '1.0.0'
+version "$rootProject.ext.plugin.version"
 sourceCompatibility = 1.8
 
 
@@ -12,9 +12,9 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation rootProject.ext.dependencies["guava"]
+    implementation rootProject.ext.dependencies["byte-buddy"]
+    implementation rootProject.ext.dependencies["byte-buddy-agent"]
 }
 
 
@@ -24,5 +24,9 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
+}
+
+task packCore(type: Copy, dependsOn: build) {
+
 }
 

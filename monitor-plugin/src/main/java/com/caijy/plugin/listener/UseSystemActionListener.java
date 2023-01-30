@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import com.caijy.agent.core.command.Commandinitializer;
 import com.caijy.plugin.config.ToolsConfiguration;
+import com.caijy.plugin.constants.ToolSettingsConstant;
 
 /**
  * @author liguang
@@ -24,7 +25,13 @@ public class UseSystemActionListener extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        textField.setText(String.valueOf(Commandinitializer.timeCostThreshold));
+        String actionCommand = e.getActionCommand();
+        if (ToolSettingsConstant.DESC_TIME_COST_THRESHOLD.equals(actionCommand)){
+            textField.setText(String.valueOf(Commandinitializer.DEFAULT_VALUE_TIME_COST_THRESHOLD));
+        }
+        if (ToolSettingsConstant.DESC_SAMPLE_RATE.equals(actionCommand)){
+            textField.setText(String.valueOf(Commandinitializer.DEFAULT_VALUE_SAMPLE_RATE));
+        }
         toolsConfiguration.apply();
     }
 }

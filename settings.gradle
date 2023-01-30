@@ -2,5 +2,8 @@ rootProject.name = 'service-invocation-monitor'
 include 'monitor-agent'
 include 'monitor-agent-core'
 include 'monitor-plugin'
-
+include 'spring5-annotation-plugin'
+include 'dubbo-2.7.x-plugin'
+include 'mvc-annotation-plugin'
+include 'monitor-test-agent'
 
