@@ -124,57 +124,57 @@ public class TraceAgent {
             })
             .installOn(inst);
 
-        new Default().type((runnableMatch.and(nameStartsWith("com.xiaobaicai"))
-            .or(callableMatch.and(nameStartsWith("com.xiaobaicai")))))
-            .transform((builder, typeDefinition, classLoader, module) ->{
-                if (!typeDefinition.isAssignableTo(Enhancer.class)) {
-                    builder = builder.defineField(CONTEXT_ATTR_NAME, Object.class, ACC_PRIVATE | ACC_VOLATILE)
-                        .implement(Enhancer.class)
-                        .intercept(FieldAccessor.ofField(CONTEXT_ATTR_NAME));
-                }
-                builder = builder.constructor(isConstructor()).intercept(
-                    SuperMethodCall.INSTANCE.andThen(MethodDelegation.to(new ThreadConstructorInterceptor())));
-                return builder;
-            })
-            .transform((builder, typeDefinition, classLoader, module) ->{
-
-                builder = builder.method(named("run")
-                    .and(takesArguments(0)).or(named("call").and(takesArguments(0))))
-                    .intercept(SuperMethodCall.INSTANCE.andThen(MethodDelegation.to(new InstrumentInterceptor(new ThreadInterceptor()))));
-
-                return builder;
-            })
-            .with(new Listener() {
-                @Override
-                public void onDiscovery(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
-                }
-
-                @Override
-                public void onTransformation(TypeDescription typeDescription, ClassLoader classLoader,
-                    JavaModule module, boolean loaded, DynamicType dynamicType) {
-                    System.out.println("onTransformation，class=" + typeDescription.getName());
-                }
-
-                @Override
-                public void onIgnored(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module,
-                    boolean loaded) {
-
-                }
-
-                @Override
-                public void onError(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded,
-                    Throwable throwable) {
-                    log.error("onError，{}",throwable);
-                }
-
-                @Override
-                public void onComplete(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
-                }
-            })
-            .with(RedefinitionStrategy.REDEFINITION)
-            .installOn(inst);
+        //new Default().type((runnableMatch.and(nameStartsWith("com.xiaobaicai"))
+        //    .or(callableMatch.and(nameStartsWith("com.xiaobaicai")))))
+        //    .transform((builder, typeDefinition, classLoader, module) ->{
+        //        if (!typeDefinition.isAssignableTo(Enhancer.class)) {
+        //            builder = builder.defineField(CONTEXT_ATTR_NAME, Object.class, ACC_PRIVATE | ACC_VOLATILE)
+        //                .implement(Enhancer.class)
+        //                .intercept(FieldAccessor.ofField(CONTEXT_ATTR_NAME));
+        //        }
+        //        builder = builder.constructor(isConstructor()).intercept(
+        //            SuperMethodCall.INSTANCE.andThen(MethodDelegation.to(new ThreadConstructorInterceptor())));
+        //        return builder;
+        //    })
+        //    .transform((builder, typeDefinition, classLoader, module) ->{
+        //
+        //        builder = builder.method(named("run")
+        //            .and(takesArguments(0)).or(named("call").and(takesArguments(0))))
+        //            .intercept(SuperMethodCall.INSTANCE.andThen(MethodDelegation.to(new InstrumentInterceptor(new ThreadInterceptor()))));
+        //
+        //        return builder;
+        //    })
+        //    .with(new Listener() {
+        //        @Override
+        //        public void onDiscovery(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
+        //
+        //        }
+        //
+        //        @Override
+        //        public void onTransformation(TypeDescription typeDescription, ClassLoader classLoader,
+        //            JavaModule module, boolean loaded, DynamicType dynamicType) {
+        //            System.out.println("onTransformation，class=" + typeDescription.getName());
+        //        }
+        //
+        //        @Override
+        //        public void onIgnored(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module,
+        //            boolean loaded) {
+        //
+        //        }
+        //
+        //        @Override
+        //        public void onError(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded,
+        //            Throwable throwable) {
+        //            log.error("onError，{}",throwable);
+        //        }
+        //
+        //        @Override
+        //        public void onComplete(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
+        //
+        //        }
+        //    })
+        //    .with(RedefinitionStrategy.REDEFINITION)
+        //    .installOn(inst);
     }
 
 }
