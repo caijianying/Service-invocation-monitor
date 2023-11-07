@@ -11,6 +11,7 @@ import com.caijy.agent.utils.PluginUtil;
 
 import java.lang.instrument.Instrumentation;
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.description.method.MethodDescription;
@@ -55,15 +56,14 @@ public class TraceAgent {
                         for (AbstractClassEnhancePluginDefine pluginDefine : enhancePluginDefines) {
                             InstanceMethodsInterceptPoint[] instanceMethodsInterceptPoints = pluginDefine.getInstanceMethodsInterceptPoints();
                             for (InstanceMethodsInterceptPoint instanceMethodsInterceptPoint : instanceMethodsInterceptPoints) {
-                                ElementMatcher.Junction junction1 = null;
                                 ElementMatcher<MethodDescription> methodsMatcher = instanceMethodsInterceptPoint.getMethodsMatcher();
                                 if (methodsMatcher == null) {
-                                    junction1 = any();
+                                    methodsMatcher = any();
                                 }
                                 AgentClassLoader agentClassLoader = new AgentClassLoader(InstrumentInterceptor.class.getClassLoader());
                                 Object newInstance = Class.forName(instanceMethodsInterceptPoint.getMethodsInterceptor(), true, agentClassLoader).newInstance();
                                 ElementMatcher.Junction<MethodDescription> junction = not((ElementMatcher) isStatic()).and(isPublic());
-                                receiverTypeDefinition = builder.method(junction.and(junction1)).intercept(MethodDelegation.to(new InstrumentInterceptor((MethodAroundInterceptor) newInstance)));
+                                receiverTypeDefinition = builder.method(junction.and(methodsMatcher)).intercept(MethodDelegation.to(new InstrumentInterceptor((MethodAroundInterceptor) newInstance)));
                             }
                         }
                     } catch (Exception e) {
