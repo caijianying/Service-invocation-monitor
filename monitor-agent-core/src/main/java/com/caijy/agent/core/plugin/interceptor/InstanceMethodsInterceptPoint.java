@@ -12,4 +12,6 @@ public interface InstanceMethodsInterceptPoint {
     ElementMatcher<MethodDescription> getMethodsMatcher();
 
     String getMethodsInterceptor();
+
+    boolean isOverrideArgs();
 }

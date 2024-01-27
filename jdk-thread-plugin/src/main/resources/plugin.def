@@ -1,0 +1,2 @@
+runnable-instrumentation=com.caijy.agent.plugin.jdk.thread.RunnableInstrumentation
+callable-instrumentation=com.caijy.agent.plugin.jdk.thread.CallableInstrumentation

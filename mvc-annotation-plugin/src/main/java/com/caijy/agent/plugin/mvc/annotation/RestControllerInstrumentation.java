@@ -1,6 +1,7 @@
 package com.caijy.agent.plugin.mvc.annotation;
 
 import com.caijy.agent.core.plugin.AbstractClassEnhancePluginDefine;
+import com.caijy.agent.core.plugin.interceptor.ConstructorInterceptPoint;
 import com.caijy.agent.core.plugin.interceptor.InstanceMethodsInterceptPoint;
 import com.caijy.agent.core.plugin.match.ClassAnnotationMatch;
 import com.caijy.agent.core.plugin.match.ClassMatch;
@@ -23,6 +24,16 @@ public class RestControllerInstrumentation extends AbstractClassEnhancePluginDef
     }
 
     @Override
+    public ConstructorInterceptPoint[] getConstructorsInterceptPoints() {
+        return new ConstructorInterceptPoint[0];
+    }
+
+    @Override
+    public boolean useEnhancedInstance() {
+        return false;
+    }
+
+    @Override
     public InstanceMethodsInterceptPoint[] getInstanceMethodsInterceptPoints() {
         return new InstanceMethodsInterceptPoint[] {
             new InstanceMethodsInterceptPoint() {
@@ -34,6 +45,11 @@ public class RestControllerInstrumentation extends AbstractClassEnhancePluginDef
                 @Override
                 public String getMethodsInterceptor() {
                     return INTERCEPTOR_CLASS;
+                }
+
+                @Override
+                public boolean isOverrideArgs() {
+                    return false;
                 }
             }
         };

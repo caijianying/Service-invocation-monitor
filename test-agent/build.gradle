@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.caijy.plugin'
-version 1.0
+version "$rootProject.ext.plugin.version"
 sourceCompatibility = 1.8
 
 
@@ -16,8 +16,6 @@ repositories {
 // implementation ==> compile
 // compileOnly ==> provided
 dependencies {
-    implementation rootProject.ext.dependencies["hutool-all"]
-    implementation rootProject.ext.dependencies["slf4j"]
     implementation project(":monitor-agent-core")
 }
 
@@ -34,7 +32,7 @@ shadowJar {
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
-                'Premain-Class': 'com.caijy.test.agent.TestTraceAgent',
+                'Premain-Class': 'com.caijy.agent.test.TraceAgent',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )

@@ -1,6 +1,7 @@
 package com.caijy.agent.plugin.dubbo;
 
 import com.caijy.agent.core.plugin.AbstractClassEnhancePluginDefine;
+import com.caijy.agent.core.plugin.interceptor.ConstructorInterceptPoint;
 import com.caijy.agent.core.plugin.interceptor.InstanceMethodsInterceptPoint;
 import com.caijy.agent.core.plugin.match.ClassMatch;
 import com.caijy.agent.core.plugin.match.NameMatch;
@@ -24,6 +25,16 @@ public class AlibabaDubboInstrumentation extends AbstractClassEnhancePluginDefin
     }
 
     @Override
+    public ConstructorInterceptPoint[] getConstructorsInterceptPoints() {
+        return new ConstructorInterceptPoint[0];
+    }
+
+    @Override
+    public boolean useEnhancedInstance() {
+        return false;
+    }
+
+    @Override
     public InstanceMethodsInterceptPoint[] getInstanceMethodsInterceptPoints() {
         return new InstanceMethodsInterceptPoint[] {
             new InstanceMethodsInterceptPoint() {
@@ -35,6 +46,11 @@ public class AlibabaDubboInstrumentation extends AbstractClassEnhancePluginDefin
                 @Override
                 public String getMethodsInterceptor() {
                     return INTERCEPTOR_CLASS;
+                }
+
+                @Override
+                public boolean isOverrideArgs() {
+                    return false;
                 }
             }
         };

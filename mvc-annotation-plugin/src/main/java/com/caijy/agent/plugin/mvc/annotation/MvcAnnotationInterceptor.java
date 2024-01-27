@@ -1,66 +1,38 @@
 package com.caijy.agent.plugin.mvc.annotation;
 
-import java.lang.reflect.Method;
-
-import com.caijy.agent.core.log.LogFactory;
-import com.caijy.agent.core.log.Logger;
-import com.caijy.agent.core.plugin.context.TrackManager;
-import com.caijy.agent.core.plugin.interceptor.enhance.MethodAroundInterceptor;
-import com.caijy.agent.core.plugin.interceptor.enhance.MethodInvocationContext;
+import com.caijy.agent.core.plugin.context.ContextManager;
+import com.caijy.agent.core.plugin.interceptor.enhance.MethodAroundInterceptorV1;
 import com.caijy.agent.core.trace.ComponentDefine;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Method;
 
 /**
  * @author liguang
  * @date 2023/1/4 星期三 2:29 下午
  */
-public class MvcAnnotationInterceptor implements MethodAroundInterceptor {
+public class MvcAnnotationInterceptor implements MethodAroundInterceptorV1 {
 
-    private static final String ROOT_LINK_TAG = "ROOT_LINK";
-
-    @Override
-    public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments,
-        Class<?>[] argumentsTypes,
-        MethodInvocationContext context) {
-        String url = "";
-        boolean rootLink = this.isRootLink();
-        if (rootLink) {
-            url = this.getControllerURL(clazz, method);
-        }
-        context.getRuntimeContext().set(ROOT_LINK_TAG,rootLink);
-        if (StringUtils.isEmpty(url)) {
-            url = clazz.getName() + "." + method.getName();
-            context.start(this.getClass().getSimpleName(), ComponentDefine.SPRING, url);
-            return;
-        }
-        context.start(this.getClass().getSimpleName(), ComponentDefine.MVC, url);
-    }
-
-    private boolean isRootLink() {
-        String traceId = TrackManager.getCurrentSpan();
-        return traceId == null;
-    }
 
     @Override
-    public void afterMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
-        MethodInvocationContext context) {
-        String url = "";
-        if ((Boolean)context.getRuntimeContext().get(ROOT_LINK_TAG)) {
+    public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) {
+        String url = null;
+        if (ContextManager.isRoot()) {
             url = this.getControllerURL(clazz, method);
         }
         if (StringUtils.isEmpty(url)) {
             url = clazz.getName() + "." + method.getName();
-            context.stop(this.getClass().getSimpleName(), ComponentDefine.SPRING, url);
+            ContextManager.createSpan(ComponentDefine.SPRING, url);
             return;
         }
-        context.stop(this.getClass().getSimpleName(), ComponentDefine.MVC, url);
+        ContextManager.createSpan(ComponentDefine.MVC, url);
+    }
+
+    @Override
+    public void afterMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) {
+        ContextManager.stopSpan();
     }
 
     private String getControllerURL(Class<?> clazz, Method method) {
@@ -137,5 +109,4 @@ public class MvcAnnotationInterceptor implements MethodAroundInterceptor {
             }
         });
     }
-
 }
