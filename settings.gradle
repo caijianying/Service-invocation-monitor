@@ -5,7 +5,6 @@ include 'monitor-plugin'
 include 'spring5-annotation-plugin'
 include 'dubbo-2.7.x-plugin'
 include 'mvc-annotation-plugin'
-include 'monitor-test-agent'
-include 'test-agent'
 include 'jdk-thread-plugin'
+include 'monitor-agent-test'
 

@@ -2,6 +2,7 @@ package com.caijy.agent.core.plugin.context;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.json.JSONUtil;
+import com.caijy.agent.core.boot.BootService;
 import com.caijy.agent.core.enums.ConsoleColorEnum;
 import com.caijy.agent.core.model.TraceSegment;
 import com.caijy.agent.core.plugin.span.LocalSpan;
@@ -19,13 +20,15 @@ import java.util.Stack;
  * @date 2024/1/26 星期五 4:04 下午
  */
 @Slf4j
-public class ContextManager {
+public class ContextManager implements BootService {
 
     private static final LinkedList<String> activeSpanIdMap = new LinkedList<>();
 
     private static final ThreadLocal<Stack> STACK_THREAD_LOCAL = new ThreadLocal<>();
 
     private static final ThreadLocal<String> LOCAL_TRACE_ID = new ThreadLocal<>();
+
+    private static boolean bootOk;
 
     public static void createSpan(ComponentDefine component, String operatorName) {
         createSpan(component, operatorName, null);
@@ -83,7 +86,7 @@ public class ContextManager {
             printInformation(traceId);
             clear(traceId);
         }
-        log.info("InvocationContextV1.exit,invokeStack: {}", activeSpanIdMap);
+        log.debug("InvocationContextV1.exit,invokeStack: {}", activeSpanIdMap);
         getStack().forEach(s -> System.out.print(s + ";"));
     }
 
@@ -137,5 +140,15 @@ public class ContextManager {
             LOCAL_TRACE_ID.set(traceId);
         }
         return traceId;
+    }
+
+    @Override
+    public void boot() throws Throwable {
+
+    }
+
+    @Override
+    public void shutdown() throws Throwable {
+
     }
 }

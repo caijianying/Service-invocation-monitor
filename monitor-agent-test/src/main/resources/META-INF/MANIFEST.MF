@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Agent-Class: com.caijy.agent.test.SimpleAgent
+Premain-Class:  com.caijy.agent.test.SimpleAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true

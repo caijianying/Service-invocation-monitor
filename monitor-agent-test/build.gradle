@@ -17,6 +17,7 @@ repositories {
 // compileOnly ==> provided
 dependencies {
     implementation project(":monitor-agent-core")
+    compileOnly rootProject.ext.dependencies["apache-dubbo"]
 }
 
 
@@ -32,10 +33,9 @@ shadowJar {
     manifest {
         attributes(
                 'Manifest-Version': '1.0',
-                'Premain-Class': 'com.caijy.agent.test.TraceAgent',
+                'Premain-Class': 'com.caijy.agent.test.SimpleAgent',
                 'Can-Redefine-Classes': true,
                 'Can-Retransform-Classes': true
         )
     }
 }
-

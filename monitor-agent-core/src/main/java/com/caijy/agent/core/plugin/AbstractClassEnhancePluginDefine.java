@@ -39,9 +39,6 @@ public abstract class AbstractClassEnhancePluginDefine {
 
     public DynamicType.Builder<?> enhance(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader) {
         try {
-            if (classLoader != null){
-                System.out.println("enhance>>>: "+classLoader.getClass().getName());
-            }
             // 先进行字段属性织入
             if (useEnhancedInstance()) {
                 if (!typeDescription.isAssignableTo(EnhancedInstance.class)) {

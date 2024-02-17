@@ -1,5 +1,6 @@
 package com.caijy.agent;
 
+import com.caijy.agent.core.boot.ServiceManager;
 import com.caijy.agent.core.config.Config;
 import com.caijy.agent.core.plugin.AbstractClassEnhancePluginDefine;
 import com.caijy.agent.core.plugin.PluginFinder;
@@ -40,9 +41,19 @@ public class TraceAgent {
                                 .or(nameContains(".asm."))
                                 .or(nameContains(".reflectasm."))
                                 .or(nameStartsWith("sun.reflect"))
-                                .or(nameStartsWith("org.apache"))
-                                .or(nameStartsWith("org.springframework"))
+                                .or(nameStartsWith("org.apache.dubbo.config"))
+                                .or(nameStartsWith("org.apache.catalina"))
+                                .or(nameStartsWith("org.apache.tomcat"))
+                                .or(nameStartsWith("org.apache.zookeeper."))
+                                .or(nameStartsWith("org.apache.curator."))
+                                .or(nameStartsWith("org.apache.dubbo.metadata."))
+                                .or(nameStartsWith("org.apache.dubbo.remoting"))
+                                .or(nameStartsWith("org.apache.dubbo.registry"))
+                                .or(nameStartsWith("org.apache.dubbo.common."))
+                                .or(nameStartsWith("org.springframework.boot."))
                                 .or(nameStartsWith("com.intellij.rt.execution"))
+                                .or(nameStartsWith("io.netty."))
+                                .or(not(isPublic()))
                                 .or(isSynthetic()))
                 .type(pluginFinder.buildMatch())
                 .transform((builder, type, classLoader, module) -> {
@@ -57,6 +68,15 @@ public class TraceAgent {
                     }
                     return builder;
                 }).installOn(inst);
+
+        try {
+            ServiceManager.INSTANCE.boot();
+        } catch (Throwable ex) {
+            log.error("Service-invocation-monitor agent boot failure.", ex);
+        }
+
+        Runtime.getRuntime()
+                .addShutdownHook(new Thread(ServiceManager.INSTANCE::shutdown, "Service-invocation-monitor service shutdown thread ..."));
     }
 
 }

@@ -17,7 +17,7 @@ public class AlibabaDubboInstrumentation extends AbstractClassEnhancePluginDefin
 
     private static final String ENHANCE_CLASS = "com.alibaba.dubbo.monitor.support.MonitorFilter";
 
-    private static final String INTERCEPTOR_CLASS = "com.caijy.agent.plugin.dubbo.DubboInterceptor";
+    private static final String INTERCEPTOR_CLASS = "com.caijy.agent.plugin.dubbo.DubboInterceptorV1";
 
     @Override
     protected ClassMatch enhanceClass() {

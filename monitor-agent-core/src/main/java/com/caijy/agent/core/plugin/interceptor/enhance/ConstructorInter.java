@@ -18,6 +18,7 @@
 
 package com.caijy.agent.core.plugin.interceptor.enhance;
 
+import com.caijy.agent.core.plugin.context.ContextManager;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;

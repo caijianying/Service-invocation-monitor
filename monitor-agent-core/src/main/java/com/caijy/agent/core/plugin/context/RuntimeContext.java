@@ -31,7 +31,7 @@ public class RuntimeContext {
 
     public static TraceSegment getTraceSegment(String traceId) {
         List<TraceModel> traceInfos = getTraceInfos(traceId);
-        log.info("getTraceSegment>>: {}", JSONUtil.toJsonStr(traceInfos));
+        log.debug("getTraceSegment>>: {}", JSONUtil.toJsonStr(traceInfos));
         try {
             TraceModel bannerModel = new TraceModel();
             bannerModel.setName("Service Invocation Monitor | Result ");

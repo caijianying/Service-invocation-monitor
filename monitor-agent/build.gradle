@@ -17,6 +17,7 @@ repositories {
 // compileOnly ==> provided
 dependencies {
     implementation project(":monitor-agent-core")
+    compileOnly rootProject.ext.dependencies["apache-dubbo"]
 }
 
 
