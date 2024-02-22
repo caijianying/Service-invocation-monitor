@@ -18,17 +18,15 @@ import java.util.jar.JarFile;
 import com.caijy.agent.core.boot.AgentPkgNotFoundException;
 import com.caijy.agent.core.boot.AgentPkgPath;
 import com.caijy.agent.core.boot.PluginBootstrap;
-import com.caijy.agent.core.log.LogFactory;
-import com.caijy.agent.core.log.Logger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liguang
  * @date 2022/12/19 星期一 9:49 上午
  */
+@Slf4j
 public class AgentClassLoader extends ClassLoader {
-
-    Logger log = LogFactory.getLogger(AgentClassLoader.class);
 
     static {
         // 为了解决classloader死锁
@@ -89,7 +87,7 @@ public class AgentClassLoader extends ClassLoader {
                 URL classFileUrl = new URL("jar:file:" + jar.sourceFile.getAbsolutePath() + "!/" + path);
                 byte[] data;
                 try (final BufferedInputStream is = new BufferedInputStream(
-                    classFileUrl.openStream()); final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                        classFileUrl.openStream()); final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                     int ch;
                     while ((ch = is.read()) != -1) {
                         baos.write(ch);
@@ -183,7 +181,7 @@ public class AgentClassLoader extends ClassLoader {
                         File file = new File(path, fileName);
                         Jar jar = new Jar(new JarFile(file), file);
                         jars.add(jar);
-                        log.debug("%s loaded.", file.toString());
+                        System.out.println(file + " loaded.");
                     } catch (IOException e) {
                         System.err.println(String.format("%s jar file can't be resolved", fileName));
                     }
