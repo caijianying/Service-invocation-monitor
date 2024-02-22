@@ -5,6 +5,7 @@ import com.caijy.agent.core.plugin.context.ContextSnapshot;
 import com.caijy.agent.core.plugin.interceptor.enhance.EnhancedInstance;
 import com.caijy.agent.core.plugin.interceptor.enhance.MethodAroundInterceptorV1;
 import com.caijy.agent.core.trace.ComponentDefine;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
 
@@ -13,13 +14,14 @@ import java.lang.reflect.Method;
  * @description
  * @date 2024/1/25 星期四 7:55 下午
  */
+@Slf4j
 public class JdkThreadMethodInterceptor implements MethodAroundInterceptorV1 {
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) throws Throwable {
-        System.out.println("JdkThreadMethodInterceptor>:: " + obj.getClass().getName() + "." + method.getName());
+        log.debug("JdkThreadMethodInterceptor>:: {}.{}", obj.getClass().getName(), method.getName());
         ContextSnapshot snapshot = (ContextSnapshot) ((EnhancedInstance) obj).getDynamicField();
         String url = clazz.getName() + "." + method.getName();
-        ContextManager.createSpan( ComponentDefine.JDK_THREAD, url, snapshot);
+        ContextManager.createSpan(ComponentDefine.JDK_THREAD, url, snapshot);
     }
 
     @Override

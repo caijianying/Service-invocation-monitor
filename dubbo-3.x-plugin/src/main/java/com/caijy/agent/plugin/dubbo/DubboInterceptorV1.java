@@ -1,34 +1,31 @@
-package com.caijy.agent.test;
+package com.caijy.agent.plugin.dubbo;
 
 import cn.hutool.core.util.StrUtil;
 import com.caijy.agent.core.plugin.context.ContextManager;
 import com.caijy.agent.core.plugin.interceptor.enhance.MethodAroundInterceptorV1;
 import com.caijy.agent.core.trace.ComponentDefine;
-import com.caijy.agent.core.utils.IgnoredUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.Constants;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
-import org.apache.dubbo.rpc.RpcContext;
-
 import java.lang.reflect.Method;
 
 /**
  * @author liguang
  * @date 2022/12/16 星期五 3:54 下午
  */
+@Slf4j
 public class DubboInterceptorV1 implements MethodAroundInterceptorV1 {
-
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) throws Throwable {
-        System.out.println("DubboInterceptorV1.enter:" + clazz.getName());
+        log.debug("DubboInterceptorV1.enter:{}", clazz.getName());
         Invoker invoker = (Invoker) allArguments[0];
         Invocation invocation = (Invocation) allArguments[1];
-        RpcContext rpcContext = RpcContext.getContext();
-        boolean isConsumer = rpcContext.isConsumerSide();
+        boolean isConsumer = isConsumerSide(invocation);
         URL requestURL = invoker.getUrl();
         String methodName = generateOperationName(requestURL, invocation);
-        System.out.println("methodName:" + methodName + ",isConsumer:" + isConsumer);
+        log.debug("methodName:{},isConsumer:{}", methodName, isConsumer);
         ContextManager.createSpan(ComponentDefine.DUBBO, methodName);
     }
 
@@ -60,12 +57,13 @@ public class DubboInterceptorV1 implements MethodAroundInterceptorV1 {
         return operationName.toString();
     }
 
-    @Override
-    public boolean isInvalid(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) {
-        System.out.println("DubboInterceptorV1.isInvalid:" + clazz.getName());
-        Invoker invoker = (Invoker)allArguments[0];
-        URL requestURL = invoker.getUrl();
-        String groupStr = requestURL.getParameter(Constants.GROUP_KEY);
-        return StrUtil.isNotEmpty(groupStr);
+    private boolean isConsumerSide(Invocation invocation) {
+        Invoker<?> invoker = invocation.getInvoker();
+        // As RpcServiceContext may not been reset when it's role switched from provider
+        // to consumer in the same thread, but RpcInvocation is always correctly bounded
+        // to the current request or serve request, https://github.com/apache/skywalking-java/pull/110
+        return invoker.getUrl()
+                .getParameter("side", "provider")
+                .equals("consumer");
     }
 }

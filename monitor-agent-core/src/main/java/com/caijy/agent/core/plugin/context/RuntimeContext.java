@@ -1,6 +1,5 @@
 package com.caijy.agent.core.plugin.context;
 
-import cn.hutool.core.lang.UUID;
 import cn.hutool.json.JSONUtil;
 import com.caijy.agent.core.MonitorException;
 import com.caijy.agent.core.model.TraceSegment;
@@ -39,7 +38,7 @@ public class RuntimeContext {
             bannerModel.setCostTime(0L);
             traceInfos.add(bannerModel);
             TraceSegment rootSegment = fillingEachSegment(bannerModel, 0, traceInfos);
-            System.out.println(JSONUtil.toJsonStr(rootSegment));
+            log.debug("rootSegment:{}", JSONUtil.toJsonStr(rootSegment));
             return rootSegment;
         } catch (Throwable ex) {
             MonitorException.error(RuntimeContext.class, ex);
@@ -78,33 +77,9 @@ public class RuntimeContext {
         this.contextThreadLocal = contextThreadLocal;
     }
 
-    public static void registerTraceInfo(TraceModel model){
+    public static void registerTraceInfo(TraceModel model) {
         List<TraceModel> traceInfos = getTraceInfos(model.getTraceId());
         traceInfos.add(model);
-    }
-
-    public static String getOrCreateTraceId(ContextSnapshot contextSnapshot) {
-        String traceId = LOCAL_TRACE_ID.get();
-        if (traceId == null) {
-            if (contextSnapshot != null) {
-                traceId = contextSnapshot.getTraceId();
-            } else {
-                traceId = UUID.fastUUID().toString();
-            }
-            LOCAL_TRACE_ID.set(traceId);
-        }
-        return traceId;
-    }
-
-    public static String getOrCreateSpanId() {
-        if (LOCAL_SPAN_ID.get() == null) {
-            LOCAL_SPAN_ID.set(UUID.randomUUID().toString());
-        }
-        return LOCAL_SPAN_ID.get();
-    }
-
-    public static boolean isRoot(ContextSnapshot contextSnapshot) {
-        return LOCAL_TRACE_ID.get() == null && contextSnapshot == null;
     }
 
     private static List<TraceModel> getTraceInfos(String traceId) {
@@ -116,12 +91,12 @@ public class RuntimeContext {
             traceModels = new ArrayList<>();
             traceModelsMap.put(traceId, traceModels);
         }
-        System.out.println("getTraceInfos >>: " + JSONUtil.toJsonStr(traceModelsMap));
+        log.debug("getTraceInfos >>: {} ", JSONUtil.toJsonStr(traceModelsMap));
         return traceModels;
     }
 
 
-    public static void exit(String traceId,String spanId) {
+    public static void exit(String traceId, String spanId) {
         if (traceId != null && spanId != null) {
             long end = System.currentTimeMillis();
             List<TraceModel> traceInfos = getTraceInfos(traceId);
