@@ -17,7 +17,7 @@ public class ApacheDubboInstrumentation extends AbstractClassEnhancePluginDefine
 
     private static final String ENHANCE_CLASS = "org.apache.dubbo.monitor.support.MonitorFilter";
 
-    private static final String INTERCEPTOR_CLASS = "com.caijy.agent.plugin.dubbo.DubboInterceptorV1";
+    private static final String INTERCEPTOR_CLASS = "com.caijy.agent.plugin.dubbo.DubboInterceptor";
 
     @Override
     protected ClassMatch enhanceClass() {
