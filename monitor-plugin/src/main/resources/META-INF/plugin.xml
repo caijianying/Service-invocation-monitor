@@ -13,14 +13,26 @@
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
-    <h3>V20220106</h3>
+    <h3>V20240228</h3>
+    <ul>
+        <li>Support asynchronous link collection, support Runnable, Callable to create asynchronous threads</li>
+        <li>fix some bugs</li>
+    </ul>
+
+    <h3>V20240228</h3>
+    <ul>
+        <li>支持异步链路采集，支持Runnable、Callable方式创建异步线程</li>
+        <li>修复了一些bug</li>
+    </ul>
+
+    <h3>V20230106</h3>
     <ul>
         <li>Support MVC, Spring, Dubbo link tracing</li>
         <li>You can view trace links in an independent window</li>
         <li>Parameter configuration of idea plugin is supported：Preferences -> tools -> Service Invocation Monitor</li>
     </ul>
 
-    <h3>V20220106</h3>
+    <h3>V20230106</h3>
     <ul>
         <li>支持MVC、Spring、Dubbo链路追踪</li>
         <li>支持通过独立窗口，查看trace链路</li>

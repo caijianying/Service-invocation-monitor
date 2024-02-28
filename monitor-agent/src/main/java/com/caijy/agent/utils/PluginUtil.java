@@ -11,18 +11,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.caijy.agent.core.log.LogFactory;
-import com.caijy.agent.core.log.Logger;
 import com.caijy.agent.core.plugin.AbstractClassEnhancePluginDefine;
 import com.caijy.agent.core.plugin.PluginDefine;
 import com.caijy.agent.core.plugin.loader.AgentClassLoader;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liguang
  * @date 2022/12/30 星期五 4:02 下午
  */
+@Slf4j
 public class PluginUtil {
-    public static final Logger log = LogFactory.getLogger(PluginUtil.class);
 
     public static List<AbstractClassEnhancePluginDefine> loadPlugin() {
         List<PluginDefine> pluginClassList = new LinkedList<>();

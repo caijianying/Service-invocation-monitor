@@ -1,11 +1,16 @@
 # Service Invocation Monitor
-* 这是一款基于SkyWalking的，轻量级的0侵入式链路监控的Idea插件，可以监控Junit、SpringBoot应用的调用链，统计接口方法耗时等。
+* 这是一款基于SkyWalking的，轻量级的0侵入式链路监控的Idea插件，可以监控SpringBoot应用的调用链，统计接口方法耗时等。
 * 平时开发中可能会很少关注到代码的性能，希望在平时的开发中，能帮助大家关注代码的性能，提升代码质量。
 ## 有了它，你可以
-* 查看接口方法调用的耗时，支持MVC、Spring、Dubbo等链路采集
+* 查看接口方法调用的耗时
 * 高耗时链路高亮显示
 * 支持配置启动命令，详见 [启动参数配置](https://github.com/caijianying/Service-invocation-monitor/blob/main/README.md#%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE)
 
+## 目前已支持
+* MVC相关注解，@GetMapping、@PostMapping、@DeleteMapping、@PutMapping、@PatchMapping
+* Spring注解 @Service
+* Dubbo3.x 链路采集
+* 跨线程调用链路采集，支持Runnable、Callable方式创建异步线程
 
 ## 快速开始
 * 下载完插件后，重启Idea。像平常一样，项目启动即可。
