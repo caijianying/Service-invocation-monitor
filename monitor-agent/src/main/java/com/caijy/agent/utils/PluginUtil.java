@@ -56,7 +56,7 @@ public class PluginUtil {
             while (urls.hasMoreElements()) {
                 URL pluginUrl = urls.nextElement();
                 cfgUrlPaths.add(pluginUrl);
-                log.debug("find plugin define in {}", pluginUrl);
+//                log.debug("find plugin define in {}", pluginUrl);
             }
 
             return cfgUrlPaths;

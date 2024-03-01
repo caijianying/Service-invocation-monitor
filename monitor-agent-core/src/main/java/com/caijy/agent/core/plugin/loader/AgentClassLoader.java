@@ -181,7 +181,7 @@ public class AgentClassLoader extends ClassLoader {
                         File file = new File(path, fileName);
                         Jar jar = new Jar(new JarFile(file), file);
                         jars.add(jar);
-                        System.out.println(file + " loaded.");
+//                        System.out.println(file + " loaded.");
                     } catch (IOException e) {
                         System.err.println(String.format("%s jar file can't be resolved", fileName));
                     }

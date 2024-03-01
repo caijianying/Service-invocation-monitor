@@ -17,7 +17,7 @@ public class SpringAnnotationInterceptor implements MethodAroundInterceptorV1 {
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments,
                              Class<?>[] argumentsTypes) {
-        log.debug("SpringAnnotationInterceptor.enter: {}.{}",clazz.getName(),method.getName());
+//        log.debug("SpringAnnotationInterceptor.enter: {}.{}",clazz.getName(),method.getName());
         String methodName = clazz.getName() + "." + method.getName();
         ContextManager.createSpan(ComponentDefine.SPRING, methodName);
     }

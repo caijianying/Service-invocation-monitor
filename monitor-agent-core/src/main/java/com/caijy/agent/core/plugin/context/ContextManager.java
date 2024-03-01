@@ -50,7 +50,7 @@ public class ContextManager implements BootService {
         getStack().push(localSpan.getSpanId());
         activeSpanIdMap.addLast(localSpan.getSpanId());
         startSpan(localSpan, start);
-        log.debug("createSpan>>:{}",JSONUtil.toJsonStr(localSpan));
+//        log.debug("createSpan>>:{}",JSONUtil.toJsonStr(localSpan));
     }
 
     private static Stack<String> getStack() {
@@ -89,7 +89,7 @@ public class ContextManager implements BootService {
             printInformation(traceId);
             clear(traceId);
         }
-        log.debug("InvocationContextV1.exit,invokeStack: {}", activeSpanIdMap);
+//        log.debug("InvocationContextV1.exit,invokeStack: {}", activeSpanIdMap);
     }
 
     private static void clear(String traceId) {

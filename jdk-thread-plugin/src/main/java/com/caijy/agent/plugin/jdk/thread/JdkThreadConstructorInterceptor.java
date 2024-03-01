@@ -15,7 +15,7 @@ public class JdkThreadConstructorInterceptor implements InstanceConstructorInter
     @Override
     public void onConstruct(EnhancedInstance objInst, Object[] allArguments) throws Throwable {
         if (ContextManager.isActive()){
-            log.debug("JdkThreadConstructorInterceptor>>: {}",objInst.getClass().getName());
+//            log.debug("JdkThreadConstructorInterceptor>>: {}",objInst.getClass().getName());
             objInst.setDynamicField(ContextManager.capture());
         }
     }

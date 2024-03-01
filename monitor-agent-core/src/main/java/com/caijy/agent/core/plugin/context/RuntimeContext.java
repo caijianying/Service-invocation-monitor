@@ -30,7 +30,7 @@ public class RuntimeContext {
 
     public static TraceSegment getTraceSegment(String traceId) {
         List<TraceModel> traceInfos = getTraceInfos(traceId);
-        log.debug("getTraceSegment>>: {}", JSONUtil.toJsonStr(traceInfos));
+//        log.debug("getTraceSegment>>: {}", JSONUtil.toJsonStr(traceInfos));
         try {
             TraceModel bannerModel = new TraceModel();
             bannerModel.setName("Service Invocation Monitor | Result ");
@@ -38,7 +38,7 @@ public class RuntimeContext {
             bannerModel.setCostTime(0L);
             traceInfos.add(bannerModel);
             TraceSegment rootSegment = fillingEachSegment(bannerModel, 0, traceInfos);
-            log.debug("rootSegment:{}", JSONUtil.toJsonStr(rootSegment));
+//            log.debug("rootSegment:{}", JSONUtil.toJsonStr(rootSegment));
             return rootSegment;
         } catch (Throwable ex) {
             MonitorException.error(RuntimeContext.class, ex);
@@ -91,7 +91,7 @@ public class RuntimeContext {
             traceModels = new ArrayList<>();
             traceModelsMap.put(traceId, traceModels);
         }
-        log.debug("getTraceInfos >>: {} ", JSONUtil.toJsonStr(traceModelsMap));
+//        log.debug("getTraceInfos >>: {} ", JSONUtil.toJsonStr(traceModelsMap));
         return traceModels;
     }
 

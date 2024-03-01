@@ -19,13 +19,13 @@ import java.lang.reflect.Method;
 public class DubboInterceptor implements MethodAroundInterceptorV1 {
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) throws Throwable {
-        log.debug("DubboInterceptorV1.enter:{}", clazz.getName());
+//        log.debug("DubboInterceptorV1.enter:{}", clazz.getName());
         Invoker invoker = (Invoker) allArguments[0];
         Invocation invocation = (Invocation) allArguments[1];
         boolean isConsumer = isConsumerSide(invocation);
         URL requestURL = invoker.getUrl();
         String methodName = generateOperationName(requestURL, invocation);
-        log.debug("methodName:{},isConsumer:{}", methodName, isConsumer);
+//        log.debug("methodName:{},isConsumer:{}", methodName, isConsumer);
         ContextManager.createSpan(ComponentDefine.DUBBO, methodName);
     }
 

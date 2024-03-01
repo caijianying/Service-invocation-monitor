@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 public class JdkThreadMethodInterceptor implements MethodAroundInterceptorV1 {
     @Override
     public void beforeMethod(Object obj, Class<?> clazz, Method method, Object[] allArguments, Class<?>[] argumentsTypes) throws Throwable {
-        log.debug("JdkThreadMethodInterceptor>:: {}.{}", obj.getClass().getName(), method.getName());
+//        log.debug("JdkThreadMethodInterceptor>:: {}.{}", obj.getClass().getName(), method.getName());
         ContextSnapshot snapshot = (ContextSnapshot) ((EnhancedInstance) obj).getDynamicField();
         String url = clazz.getName() + "." + method.getName();
         ContextManager.createSpan(ComponentDefine.JDK_THREAD, url, snapshot);
