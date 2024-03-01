@@ -5,131 +5,151 @@
     <description><![CDATA[
         This is a lightweight Idea plug-in that monitors the link calls of Junit and SpringBoot applications and counts the time spent on interface methods with zero intrusion. It helps developers see the timing of the call chain more visually when debugging code, and optimizes performance ahead of time.
         <br/>
-        <br/> 这是一款轻量级的Idea插件，可以零侵入地做到对Junit和SpringBoot应用程序调用链路的监控，统计接口方法的耗时。它可以帮助开发人员在调试代码时更直观地看到调用链的时间，提前对性能做一些优化处理。
+        <br/>这是一款轻量级的Idea插件，也是我个人开发的第一个插件。
         <br/>
+        <br/>可以零侵入地做到对SpringBoot应用程序调用链路的监控，统计接口方法的耗时。它可以帮助开发人员在调试代码时更直观地看到调用链的时间，提前对性能做一些优化处理。
+        <br/>
+        <br/>如果觉得插件好用，感谢给个好评！🙏🙏🙏 大家的认可是插件更新的动力！</a>
         <br/>插件地址：<a href="https://github.com/caijianying/Service-invocation-monitor">https://github.com/caijianying/Service-invocation-monitor</a>
         <br/>演示项目地址：<a href="https://github.com/caijianying/Service-invocation-monitor-demo">https://github.com/caijianying/Service-invocation-monitor-demo</a>
         ]]></description>
     <vendor>小白菜</vendor>
 
     <change-notes><![CDATA[
-    <h3>V20240228</h3>
-    <ul>
-        <li>Support asynchronous link collection, support Runnable, Callable to create asynchronous threads</li>
-        <li>fix some bugs</li>
-    </ul>
+        <h3>V20240301</h3>
+        <ul>
+            <li>fix some bugs</li>
+        </ul>
 
-    <h3>V20240228</h3>
-    <ul>
-        <li>支持异步链路采集，支持Runnable、Callable方式创建异步线程</li>
-        <li>修复了一些bug</li>
-    </ul>
+        <h3>V20240301</h3>
+        <ul>
+            <li>修复了一些bug</li>
+        </ul>
 
-    <h3>V20230106</h3>
-    <ul>
-        <li>Support MVC, Spring, Dubbo link tracing</li>
-        <li>You can view trace links in an independent window</li>
-        <li>Parameter configuration of idea plugin is supported：Preferences -> tools -> Service Invocation Monitor</li>
-    </ul>
+        <h3>V20240228</h3>
+        <ul>
+            <li>Support asynchronous link collection, support Runnable, Callable to create asynchronous threads</li>
+        </ul>
 
-    <h3>V20230106</h3>
-    <ul>
-        <li>支持MVC、Spring、Dubbo链路追踪</li>
-        <li>支持通过独立窗口，查看trace链路</li>
-        <li>支持idea插件参数配置：Preferences -> tools -> Service Invocation Monitor</li>
-    </ul>
+        <h3>V20240228</h3>
+        <ul>
+            <li>支持异步链路采集，支持Runnable、Callable方式创建异步线程</li>
+        </ul>
 
-    <h3>V1.0.6</h3>
-    <ul>
-        <li>Added Idea configuration entry for time-consuming options：Preferences -> tools -> Service Invocation Monitor</li>
-    </ul>
+        <h3>V20230106</h3>
+        <ul>
+            <li>Support MVC, Spring, Dubbo link tracing</li>
+            <li>You can view trace links in an independent window</li>
+            <li>Parameter configuration of idea plugin is supported：Preferences -> tools -> Service Invocation Monitor
+            </li>
+        </ul>
 
-    <h3>V1.0.6</h3>
-    <ul>
-        <li>为高耗时选项增加Idea配置入口：Preferences -> tools -> Service Invocation Monitor</li>
-    </ul>
-    <h3>V1.0.5</h3>
-    <ul>
-        <li>fix: Fixed an issue where the monitoring package name was read incorrectly when starting the SpringBoot test case</li>
-        <li>fix: Fixed an issue where the latest version of Idea could not download the plugin</li>
-        <li>The IDEA plugin is optimized to monitor the startup command</li>
-    </ul>
+        <h3>V20230106</h3>
+        <ul>
+            <li>支持MVC、Spring、Dubbo链路追踪</li>
+            <li>支持通过独立窗口，查看trace链路</li>
+            <li>支持idea插件参数配置：Preferences -> tools -> Service Invocation Monitor</li>
+        </ul>
 
-    <h3>V1.0.5</h3>
-    <ul>
-        <li>fix: 修复了启动SpringBoot的测试用例时，读取监控包名有误的问题</li>
-        <li>fix: 修复了Idea最新版本下载不了插件的问题</li>
-        <li>优化了idea插件对启动命令的监控</li>
-    </ul>
+        <h3>V1.0.6</h3>
+        <ul>
+            <li>Added Idea configuration entry for time-consuming options：Preferences -> tools -> Service Invocation
+                Monitor
+            </li>
+        </ul>
 
-    <h3>V1.0.4</h3>
-    <ul>
-        <li>High time-consuming and low time-consuming links are displayed in different colors. By default, the link that is higher than [100 milliseconds] is judged to be a high time-consuming link. You can specify a specific value through the vm parameter 【-Dmonitor.timeCost.threshold=100】 in milliseconds.</li>
-        <li>The SpringBoot project uses the [package name where the startup class is located] by default, and the package name can be specified by the Vm parameter 【-Dmonitor.package】</li>
-        <li>Code structure adjustment</li>
-    </ul>
+        <h3>V1.0.6</h3>
+        <ul>
+            <li>为高耗时选项增加Idea配置入口：Preferences -> tools -> Service Invocation Monitor</li>
+        </ul>
+        <h3>V1.0.5</h3>
+        <ul>
+            <li>fix: Fixed an issue where the monitoring package name was read incorrectly when starting the SpringBoot
+                test case
+            </li>
+            <li>fix: Fixed an issue where the latest version of Idea could not download the plugin</li>
+            <li>The IDEA plugin is optimized to monitor the startup command</li>
+        </ul>
 
-    <h3>V1.0.4</h3>
-    <ul>
-        <li>高耗时和低耗时的链路，不同颜色区分显示。默认判断高于【100毫秒】的链路为高耗时链路，可通过vm参数【-Dmonitor.timeCost.threshold=100】指定具体数值，单位为毫秒。</li>
-        <li>SpringBoot项目默认使用【启动类所在的包名】，包名可通过Vm参数【-Dmonitor.package】指定</li>
-        <li>代码结构调整</li>
-    </ul>
+        <h3>V1.0.5</h3>
+        <ul>
+            <li>fix: 修复了启动SpringBoot的测试用例时，读取监控包名有误的问题</li>
+            <li>fix: 修复了Idea最新版本下载不了插件的问题</li>
+            <li>优化了idea插件对启动命令的监控</li>
+        </ul>
 
-    <h3>V1.0.3-fix</h3>
-    <ul>
-        <li>fixed some bugs</li>
-    </ul>
+        <h3>V1.0.4</h3>
+        <ul>
+            <li>High time-consuming and low time-consuming links are displayed in different colors. By default, the link
+                that is higher than [100 milliseconds] is judged to be a high time-consuming link. You can specify a
+                specific value through the vm parameter 【-Dmonitor.timeCost.threshold=100】 in milliseconds.
+            </li>
+            <li>The SpringBoot project uses the [package name where the startup class is located] by default, and the
+                package name can be specified by the Vm parameter 【-Dmonitor.package】
+            </li>
+            <li>Code structure adjustment</li>
+        </ul>
 
-    <h3>V1.0.3-fix</h3>
-    <ul>
-        <li>修复了一些bug</li>
-    </ul>
+        <h3>V1.0.4</h3>
+        <ul>
+            <li>高耗时和低耗时的链路，不同颜色区分显示。默认判断高于【100毫秒】的链路为高耗时链路，可通过vm参数【-Dmonitor.timeCost.threshold=100】指定具体数值，单位为毫秒。</li>
+            <li>SpringBoot项目默认使用【启动类所在的包名】，包名可通过Vm参数【-Dmonitor.package】指定</li>
+            <li>代码结构调整</li>
+        </ul>
 
-    <h3>V1.0.3</h3>
-    <ul>
-        <li>Help users to see the trace link display more intuitively</li>
-    </ul>
+        <h3>V1.0.3-fix</h3>
+        <ul>
+            <li>fixed some bugs</li>
+        </ul>
 
-    <h3>V1.0.3</h3>
-    <ul>
-        <li>帮助使用者更直观地看到trace链路显示</li>
-    </ul>
+        <h3>V1.0.3-fix</h3>
+        <ul>
+            <li>修复了一些bug</li>
+        </ul>
 
-    <h3>V1.0.2</h3>
-    <ul>
-        <li>Optimized the way the method tree is calculated</li>
-    </ul>
+        <h3>V1.0.3</h3>
+        <ul>
+            <li>Help users to see the trace link display more intuitively</li>
+        </ul>
 
-    <h3>V1.0.2</h3>
-    <ul>
-        <li>优化了方法树的计算方式</li>
-    </ul>
+        <h3>V1.0.3</h3>
+        <ul>
+            <li>帮助使用者更直观地看到trace链路显示</li>
+        </ul>
 
-    <h3>V1.0.1</h3>
-    <ul>
-        <li>fix. The bug that the plugin reports a wide range of errors in a multi-threaded environment</li>
-        <li>Useless method calls within the Spring framework and JDK are filtered out during statistics</li>
-        <li>Filter out the useless method calls of mybatis-plus during statistics</li>
-        <li>Support Spring Annotation @Service and @RestController</li>
-    </ul>
+        <h3>V1.0.2</h3>
+        <ul>
+            <li>Optimized the way the method tree is calculated</li>
+        </ul>
 
-    <h3>V1.0.1</h3>
-    <ul>
-        <li>fix.多线程环境下插件大范围报错的bug</li>
-        <li>统计时过滤了Spring框架和JDK内部无用的方法调用</li>
-        <li>统计时过滤了mybatis-plus无用的方法调用</li>
-        <li>支持Spring注解， @Service 和 @RestController</li>
-    </ul>
+        <h3>V1.0.2</h3>
+        <ul>
+            <li>优化了方法树的计算方式</li>
+        </ul>
 
-    <h3>V1.0.0</h3>
-    <ul>
-      <li>Support monitoring junit use cases</li>
-      <li>Support SpringBoot application monitoring</li>
-      <li>Monitoring indicator: The time of the trace link</li>
-    </ul>
+        <h3>V1.0.1</h3>
+        <ul>
+            <li>fix. The bug that the plugin reports a wide range of errors in a multi-threaded environment</li>
+            <li>Useless method calls within the Spring framework and JDK are filtered out during statistics</li>
+            <li>Filter out the useless method calls of mybatis-plus during statistics</li>
+            <li>Support Spring Annotation @Service and @RestController</li>
+        </ul>
 
-    ]]>
+        <h3>V1.0.1</h3>
+        <ul>
+            <li>fix.多线程环境下插件大范围报错的bug</li>
+            <li>统计时过滤了Spring框架和JDK内部无用的方法调用</li>
+            <li>统计时过滤了mybatis-plus无用的方法调用</li>
+            <li>支持Spring注解， @Service 和 @RestController</li>
+        </ul>
+
+        <h3>V1.0.0</h3>
+        <ul>
+            <li>Support monitoring junit use cases</li>
+            <li>Support SpringBoot application monitoring</li>
+            <li>Monitoring indicator: The time of the trace link</li>
+        </ul>
+        ]]>
     </change-notes>
 
 
