@@ -35,5 +35,3 @@
 ### 小Tips
 * 关于插件更多的详细介绍，可以查看 https://juejin.cn/post/7122055033906003981/ ，里面记录着插件从无到有的产生过程 
 * 若觉得有方便到您，欢迎Star哦.若有建议，请提Issue.大家共同进步。
-
-[![Star History Chart](https://api.star-history.com/svg?repos=/caijianying/Service-invocation-monitor&type=Date)](https://star-history.com/#/caijianying/Service-invocation-monitor&Date)
