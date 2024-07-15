@@ -1,6 +1,17 @@
 # Service Invocation Monitor
+
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/caijianying/Service-invocation-monitor/blob/main/LICENSE)
+[![](https://img.shields.io/badge/Author-小白菜-orange.svg)](https://caijianying.github.com)
+[![](https://img.shields.io/badge/version-V20240228-brightgreen.svg)](https://github.com/caijianying/Service-invocation-monitor)
+
+# 介绍
 * 这是一款基于SkyWalking的，轻量级的0侵入式链路监控的Idea插件，可以监控SpringBoot应用的调用链，统计接口方法耗时等。
 * 平时开发中可能会很少关注到代码的性能，希望在平时的开发中，能帮助大家关注代码的性能，提升代码质量。
+
+## 实现原理及关键技术
+* JavaAgent的Attach机制
+* IntelliJ Platform Plugin SDK
+
 ## 有了它，你可以
 * 查看接口方法调用的耗时
 * 高耗时链路高亮显示
