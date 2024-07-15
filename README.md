@@ -3,6 +3,8 @@
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/caijianying/Service-invocation-monitor/blob/main/LICENSE)
 [![](https://img.shields.io/badge/Author-小白菜-orange.svg)](https://caijianying.github.io)
 [![](https://img.shields.io/badge/version-V20240228-brightgreen.svg)](https://github.com/caijianying/Service-invocation-monitor)
+[![AUR](https://img.shields.io/badge/Plugin%20Home-Service%20Invocation%20Monitor-blue.svg)](https://plugins.jetbrains.com/plugin/19544-service-invocation-monitor)
+
 
 # 介绍
 * 这是一款基于SkyWalking的，轻量级的0侵入式链路监控的Idea插件，可以监控SpringBoot应用的调用链，统计接口方法耗时等。
