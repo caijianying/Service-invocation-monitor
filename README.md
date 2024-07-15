@@ -1,7 +1,7 @@
 # Service Invocation Monitor
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/caijianying/Service-invocation-monitor/blob/main/LICENSE)
-[![](https://img.shields.io/badge/Author-小白菜-orange.svg)](https://caijianying.github.com)
+[![](https://img.shields.io/badge/Author-小白菜-orange.svg)](https://caijianying.github.io)
 [![](https://img.shields.io/badge/version-V20240228-brightgreen.svg)](https://github.com/caijianying/Service-invocation-monitor)
 
 # 介绍
