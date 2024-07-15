@@ -43,6 +43,9 @@
 | `-Dmonitor.sampleRate` | 非必填 | 采样率，精度为1/10000. 10000 means 100% sample in default. | 10000 |
 
 
-### 小Tips
+## 感谢
+https://github.com/apache/skywalking
+
+## 最后
 * 关于插件更多的详细介绍，可以查看 https://juejin.cn/post/7122055033906003981/ ，里面记录着插件从无到有的产生过程 
 * 若觉得有方便到您，欢迎Star哦.若有建议，请提Issue.大家共同进步。
