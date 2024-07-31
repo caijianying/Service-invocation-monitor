@@ -1,5 +1,6 @@
 # Service Invocation Monitor
 
+[![GitHub stars](https://img.shields.io/github/stars/caijianying/Service-invocation-monitor.svg?style=badge&label=Stars&logo=github)](https://github.com/caijianying/Service-invocation-monitor)
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/caijianying/Service-invocation-monitor/blob/main/LICENSE)
 [![](https://img.shields.io/badge/Author-小白菜-orange.svg)](https://caijianying.github.io)
 [![](https://img.shields.io/badge/version-V20240228-brightgreen.svg)](https://github.com/caijianying/Service-invocation-monitor)
